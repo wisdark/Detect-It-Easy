@@ -56,7 +56,7 @@ function detect(bShowType,bShowVersion,bShowOptions)
             for(var i=0;i<nNumberOfImports;i++)
             {
                 if(PE.getNumberOfImportThunks(i)==1
-                 &&PE.getImportFunctionName(i,0)=="")
+                 &&((PE.getImportFunctionName(i,0)=="")||(PE.getImportFunctionName(i,0)=="1")))
                 {
                     sLibraryName=PE.getImportLibraryName(i);
                     sVersion=PE.getPEFileVersion(PE.getFileDirectory()+"/"+sLibraryName);
@@ -64,10 +64,8 @@ function detect(bShowType,bShowVersion,bShowOptions)
                     {
                         sVersion="4.X-5.X";
                     }
-                    else
-                    {
-                        sOptions=sLibraryName;
-                    }
+
+                    sOptions=sLibraryName;
                     bDetected=1;
                     break;
                 }

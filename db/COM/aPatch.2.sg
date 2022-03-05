@@ -1,13 +1,13 @@
 // DIE's signature file
 // Author: hypn0 <hypn0@mail.ru>
 
-init("protector","RDT_ENC 3");
+init("protector","aPatch");
 
 function detect(bShowType,bShowVersion,bShowOptions)
 {
-    if(Binary.compare("e9$$$$be....8bfe8bce33c08ed8c706........c606......26acba....52fe0e....74..e8....d0c8fec83206....c3"))
+    if(Binary.compare("e8$$$$fde8$$$$ffc75e83ee..e8$$$$5d8176......c646....eb"))
     {
-        sOptions="by mr. Wicked";
+        sVersion="0.05-0.33";
         bDetected=1;
     }
 
