@@ -1,4 +1,5 @@
 // DIE's signature file
+// coauthor: sendersu
 
 /*
 Visual Studio                   4.0
@@ -14,6 +15,7 @@ Visual Studio 2013              12.0
 Visual Studio 2015              14.0
 Visual Studio 2017              15.0
 Visual Studio 2019              16.0
+Visual Studio 2022              17.0
 */
 
 includeScript("MFC");
@@ -25,6 +27,7 @@ init("compiler","Microsoft Visual "+(aMFC||aQt||aWx||PE.isLibraryPresentExp(/^MS
 function getVCVersionFromLinkerVersion()
 {
     var sResult="";
+    var minorVer = PE.getMinorLinkerVersion();
     switch(PE.getMajorLinkerVersion())
     {
     case 3:  sResult=PE.getCompilerVersion();   break; // MS C++
@@ -32,7 +35,7 @@ function getVCVersionFromLinkerVersion()
     case 5:  sResult="5.0";  break;
     case 6:  sResult="6.0";  break;
     case 7:
-        if(PE.getMinorLinkerVersion()<10)
+        if(minorVer<10)
         {
             sResult="2002";
         }
@@ -47,10 +50,10 @@ function getVCVersionFromLinkerVersion()
     case 11: sResult="2012"; break;
     case 12: sResult="2013"; break;
     case 14:
-        switch(PE.getMinorLinkerVersion())
+        switch(minorVer)
         {
         case 0:  sResult="2015 v.14.0"; break;
-        case 10: sResult="2017 v.15.0"; break;
+        case 10: sResult="2017 v.15.0 or 15.1 or 15.2"; break;
         case 11: sResult="2017 v.15.3"; break;
         case 12: sResult="2017 v.15.5"; break;
         case 13: sResult="2017 v.15.6"; break;
@@ -58,6 +61,21 @@ function getVCVersionFromLinkerVersion()
         case 15: sResult="2017 v.15.8"; break;
         case 16: sResult="2017 v.15.9"; break;
         case 20: sResult="2019 v.16.0"; break; 
+        case 21: sResult="2019 v.16.1"; break;
+        case 22: sResult="2019 v.16.2"; break;
+        case 23: sResult="2019 v.16.3"; break;
+        case 24: sResult="2019 v.16.4"; break;
+        case 25: sResult="2019 v.16.5"; break;
+        case 26: sResult="2019 v.16.6"; break;
+        case 27: sResult="2019 v.16.7"; break;
+        case 28: sResult="2019 v.16.8 or 16.9"; break;
+        case 29: sResult="2019 v.16.10 or 16.11"; break;
+        case 30: sResult="2022 v.17.0"; break;
+        case 31: sResult="2022 v.17.1"; break;
+        case 32: sResult="2022 v.17.2"; break;
+        case 33: sResult="2022 v.17.3"; break;
+        case 34: sResult="2022 v.17.4"; break;
+        default: sResult="2022+"; break;
         }
     }
 

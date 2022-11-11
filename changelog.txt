@@ -1,3 +1,22 @@
+3.06
+-----------------------------------------------------------------------
+[+] Bundle for Arch Linux
+[+] VirusTotal analysis
+[+] New widgets
+[+] New detects
+[+] New translations
+[+] Many bugs have been fixed
+#######################################################################
+3.05
+-----------------------------------------------------------------------
+[+] Bundle for Ubuntu 22.04
+[+] Bundle for Apple M1 processor
+[+] MACHOFAT support
+[+] Colored output for console
+[+] New detects
+[+] New translations
+[+] Many bugs have been fixed
+#######################################################################
 3.04
 -----------------------------------------------------------------------
 [+] Source code qt6 compatibility

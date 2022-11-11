@@ -3,6 +3,10 @@
 [![GitHub All Releases](https://img.shields.io/github/downloads/horsicq/DIE-engine/total.svg)](http://ntinfo.biz)
 [![gitlocalized ](https://gitlocalize.com/repo/4736/whole_project/badge.svg)](https://github.com/horsicq/XTranslation)
 
+[![OS Linux](https://img.shields.io/badge/os-linux-brightgreen)](https://github.com/horsicq/DIE-engine/releases)
+[![OS Windows](https://img.shields.io/badge/os-windows-brightgreen)](https://github.com/horsicq/DIE-engine/releases)
+[![OS MacOS](https://img.shields.io/badge/os-macos-brightgreen)](https://github.com/horsicq/DIE-engine/releases)
+
 Detect It Easy
 ==============
 
@@ -16,6 +20,7 @@ Detect It Easy
 ![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/3.png "3")
 ![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/4.png "4")
 ![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/5.png "5")
+![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/6.png "6")
 
 Detect It Easy, or abbreviated "DIE" is a program for determining types of files.
 
@@ -65,5 +70,18 @@ Telegram Bot
 
 You could find the Bot in Telegram @detectiteasy_bot or simply enter in the search for Telegram "Detect It Easy"
 
-![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/mascots/die.jpg "Mascot")
+Thanks to all the people who already contributed!
+=======
+
+<a href="https://github.com/horsicq/Detect-It-Easy/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=horsicq/Detect-It-Easy" />
+</a>
+
+## Special Thanks
+
+- [PELock Software Protection & Reverse Engineering](https://www.pelock.com)
+
+![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/mascots/logo.png "Mascot")
+
+
 

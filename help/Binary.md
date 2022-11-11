@@ -190,6 +190,10 @@ if(signature=="AA5411DD")
     bDetected=1;
 }
 ```
+**QString calculateCRC32(qint64 nOffset,qint64 nSize)** Calculate the CRC32 hash of a region of the file.
+
+```
+```
 **double calculateEntropy(qint64 nOffset,qint64 nSize)** Calculate the entropy of a region of the file.
 
 * Result in the form of quantity of bits per byte. Since there are 8 bits in a byte, the maximum entropy will be 8.0.
@@ -220,6 +224,22 @@ if(signature=="AA5411DD")
 
 ```
 ```
+**bool isUTF8Text()**
+
+```
+```
+**bool isUnicodeText()**
+
+```
+```
+**bool isText()**
+
+```
+```
+**QString getHeaderString()**
+
+```
+```
 **qint32 getDisasmLength(qint64 nAddress)**
 
 ```
@@ -243,4 +263,180 @@ if(signature=="AA5411DD")
 **bool is64()**
 
 ```
+```
+**bool isDeepScan()**
+
+```
+```
+**bool isHeuristicScan()**
+
+```
+```
+**bool isVerbose()**
+
+```
+```
+**quint8 read_uint8(qint64 nOffset)**
+
+```
+```
+**qint8 read_int8(qint64 nOffset)**
+
+```
+```
+**quint16 read_uint16(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**qint16 read_int16(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**quint32 read_uint32(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**qint32 read_int32(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**quint64 read_uint64(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**qint64 read_int64(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**QString read_ansiString(qint64 nOffset,qint64 nMaxSize=50)**
+
+```
+```
+**QString read_unicodeString(qint64 nOffset,qint64 nMaxSize=50)**
+
+```
+```
+**QString read_utf8String(qint64 nOffset,qint64 nMaxSize=50)**
+
+```
+```
+**QString read_ucsdString(qint64 nOffset)**
+
+```
+```
+**QString bytesCountToString(quint64 nValue,quint32 nBase=1024)**
+
+```
+```
+**qint64 find_ansiString(qint64 nOffset,qint64 nSize,QString sString)**
+
+```
+```
+**qint64 find_unicodeString(qint64 nOffset,qint64 nSize,QString sString)**
+
+```
+```
+**qint64 find_utf8String(qint64 nOffset,qint64 nSize,QString sString)**
+
+```
+```
+**QString read_UUID_bytes(qint64 nOffset)**
+
+```
+```
+**QString read_UUID(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**float read_float(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**double read_double(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**float read_float16(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**float read_float32(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**float read_float64(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**quint32 read_uint24(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**qint32 read_int24(qint64 nOffset,bool bIsBigEndian=false)**
+
+```
+```
+**QString read_codePageString(qint64 nOffset,qint64 nMaxByteSize=256,QString sCodePage="System")**
+
+```
+System
+ISO-8859-1
+ISO-8859-2
+ISO-8859-3
+ISO-8859-4
+ISO-8859-5
+ISO-8859-7
+ISO-8859-9
+ISO-8859-10
+Shift_JIS
+EUC-JP
+EUC-KR
+ISO-2022-JP
+ISO-8859-6
+ISO-8859-8
+UTF-8
+ISO-8859-13
+ISO-8859-14
+ISO-8859-15
+ISO-8859-16
+GBK
+GB18030
+WINSAMI2
+IBM874
+windows-949
+UTF-16BE
+UTF-16LE
+UTF-16
+UTF-32
+UTF-32BE
+UTF-32LE
+hp-roman8
+IBM850
+GB2312
+Big5
+macintosh
+KOI8-R
+IBM866
+KOI8-U
+Big5-HKSCS
+TSCII
+windows-1250
+windows-1251
+windows-1252
+windows-1253
+windows-1254
+windows-1255
+windows-1256
+windows-1257
+windows-1258
+TIS-620
+iscii-dev
+iscii-bng
+iscii-pnj
+iscii-gjr
+iscii-ori
+iscii-tml
+iscii-tlg
+iscii-knd
+iscii-mlm
 ```
