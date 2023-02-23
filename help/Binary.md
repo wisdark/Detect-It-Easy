@@ -440,3 +440,44 @@ iscii-tlg
 iscii-knd
 iscii-mlm
 ```
+**quint8 read_bcd_uint8(qint64 nOffset)**
+
+```
+```
+**quint16 read_bcd_uint16(qint64 nOffset, bool bIsBigEndian = false)**
+
+```
+```
+**quint16 read_bcd_uint32(qint64 nOffset, bool bIsBigEndian = false)**
+
+```
+```
+**quint16 read_bcd_uint64(qint64 nOffset, bool bIsBigEndian = false)**
+
+```
+```
+**bool isJpeg()**
+
+```
+```
+**QString getJpegComment()**
+
+```
+```
+**QString getJpegDqtMD5()**
+
+```
+```
+**bool isJpegChunkPresent(qint32 nID)**
+
+```
+```
+**isJpegExifPresent()**
+
+```
+```
+
+**getJpegExifCameraName()**
+
+```
+```

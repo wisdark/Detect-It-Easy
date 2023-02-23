@@ -15,6 +15,8 @@ Detect It Easy
 * How to build: https://github.com/horsicq/Detect-It-Easy/blob/master/docs/BUILD.md
 * Changelog: https://github.com/horsicq/Detect-It-Easy/blob/master/changelog.txt
 
+You can help with translation: https://github.com/horsicq/XTranslation
+
 ![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/1.png "1")
 ![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/2.png "2")
 ![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/3.png "3")
@@ -64,6 +66,7 @@ Packages
 - Parrot OS: Package name **detect-it-easy** (Thanks **Nong Hoang Tu**(https://github.com/dmknght))
 - Arch Linux: https://aur.archlinux.org/packages/detect-it-easy-git/ (Thanks **Arnaud Dovi**(https://github.com/class101))
 - REMnux https://remnux.org/ (Thanks **REMnux team**(https://twitter.com/REMnux/status/1401935989266919426))
+- openSUSE https://build.opensuse.org/package/show/home:mnhauke/detect-it-easy (Thanks Martin Hauke)
 
 Telegram Bot
 =======
