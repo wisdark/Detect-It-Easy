@@ -1,3 +1,24 @@
+3.09
+-----------------------------------------------------------------------
+[+] Bundle for Ubuntu 23.10
+[+] Bundle for Kali Linux 
+[+] Bundle for Parrot Linux
+[+] Yara widget
+[+] New Heuristic module (thanks DosX_dev)
+[+] New detects
+[+] New translations
+[+] Many bugs have been fixed
+#######################################################################
+
+3.08
+-----------------------------------------------------------------------
+[+] Bundle for Ubuntu 23.04
+[+] Visualization
+[+] New widgets
+[+] New detects
+[+] New translations
+[+] Many bugs have been fixed
+#######################################################################
 3.07
 -----------------------------------------------------------------------
 [+] Bundle for Ubuntu 22.10
@@ -68,7 +89,7 @@
 [+] New Disassembler(x86,ARM,MIPS,PPC,M68K)
 [+] MIME detection
 [+] APK/DEX detection
-[+] New translations(Italian,Turkish,Korean,Spanish,French,Portuguese)
+[+] New translations (Italian, Turkish, Korean, Spanish, French, Portuguese)
 [+] Many bugs have been fixed
 #######################################################################
 3.00
@@ -125,7 +146,7 @@
 #######################################################################
 2.00
 -----------------------------------------------------------------------
-[+] More than 500 new detects(thanks hypn0 and other contributors)
+[+] More than 500 new detects (thanks hypn0 and other contributors)
 [+] New experimental scanning method
 [+] Many bugs have been fixed
 #######################################################################

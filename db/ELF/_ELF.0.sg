@@ -1,14 +1,15 @@
 // DIE's signature file
 
-init("operation system","Unix");
+init("operation system", "Unix");
 
-function detect(bShowType,bShowVersion,bShowOptions)
-{
-    sName = ELF.getOperationSystemName();
-    sVersion = ELF.getOperationSystemVersion();
-    sOptions = ELF.getOperationSystemOptions();
-    
-    bDetected=1;
+function detect(bShowType, bShowVersion, bShowOptions) {
+    if (ELF.isVerbose()) {
+        sName = ELF.getOperationSystemName();
+        sVersion = ELF.getOperationSystemVersion();
+        sOptions = ELF.getOperationSystemOptions();
 
-    return result(bShowType,bShowVersion,bShowOptions);
+        bDetected = true;
+    }
+
+    return result(bShowType, bShowVersion, bShowOptions);
 }

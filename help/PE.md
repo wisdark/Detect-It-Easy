@@ -83,6 +83,18 @@
 
 ```
 ```
+**bool isNetUStringPresent(QString sString)**
+
+```
+```
+**qint64 findSignatureInBlob_NET(QString sSignature)**
+
+```
+```
+**bool isSignatureInBlobPresent_NET(QString sSignature)**
+
+```
+```
 **qint32 getNumberOfImports()**
 
 ```
@@ -91,7 +103,7 @@
 
 ```
 ```
-**bool isLibraryPresent(QString sLibraryName)**
+**bool isLibraryPresent(QString sLibraryNameisLibraryPresent, bool bCheckCase = false)**
 
 ```
 ```
@@ -235,6 +247,14 @@
 
 ```
 ```
+**qint32 getNumberOfExportFunctions()**
+
+```
+```
+**QString getExportFunctionName(quint32 nNumber)
+
+```
+```
 **bool isExportPresent()**
 
 ```
@@ -263,4 +283,11 @@
 
 ```
 ```
+**quint64 getImageFileHeader(QString sString)**
 
+```
+```
+**quint64 getImageOptionalHeader(QString sString)**
+
+```
+```

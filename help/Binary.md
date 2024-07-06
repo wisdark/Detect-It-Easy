@@ -204,6 +204,21 @@ if(signature=="AA5411DD")
 
 ```
 ```
+
+**quint16 crc16(qint64 nOffset, qint64 nSize, quint16 nInit = 0)**
+
+```
+```
+
+**quint32 crc32(qint64 nOffset, qint64 nSize, quint32 nInit = 0)**
+
+```
+```
+
+**quint32 adler32(qint64 nOffset, qint64 nSize)**
+
+```
+```
 **bool isSignatureInSectionPresent(quint32 nNumber,QString sSignature)**
 
 ```
@@ -273,6 +288,11 @@ if(signature=="AA5411DD")
 ```
 ```
 **bool isVerbose()**
+
+```
+```
+
+**bool isProfiling()**
 
 ```
 ```
@@ -476,8 +496,79 @@ iscii-mlm
 
 ```
 ```
-
 **getJpegExifCameraName()**
 
 ```
 ```
+**QString getOperationSystemName()**
+
+```
+```
+**QString getOperationSystemVersion()**
+
+```
+```
+**QString getOperationSystemOptions()**
+
+```
+```
+**bool isSigned()**
+
+```
+```
+**QString cleanString(QString sString)**
+
+```
+```
+**qint64 startTiming()**
+**qint64 endTiming(qint64 nHandle, const QString &sInfo)**
+
+```
+// Profiling flag should be set
+var nProfiling = Binary.startTiming();
+// slow code
+var nTime = PE.endTiming(nProfiling, "PROFILING");
+```
+
+**qint64 detectZLIB(qint64 nOffset, qint64 nSize)**
+
+```
+```
+**qint64 detectGZIP(qint64 nOffset, qint64 nSize)**
+
+```
+```
+**qint64 detectZIP(qint64 nOffset, qint64 nSize)**
+
+```
+```
+### Shorthands
+
+`X.U8(a)` = `File.read_uint8(a)`\
+`X.I8(a)` = `File.read_int8(a)`
+
+`X.U16(a,b)` = `File.read_uint16(a,b)`\
+`X.I16(a,b)` = `File.read_int16(a,b)`\
+`X.F16(a,b)` = `File.read_float16(a,b)`
+
+`X.U24(a,b)` = `File.read_uint24(a,b)`\
+`X.I24(a,b)` = `File.read_int24(a,b)`
+
+`X.U32(a,b)` = `File.read_uint32(a,b)`\
+`X.I32(a,b)` = `File.read_int32(a,b)`\
+`X.F32(a,b)` = `File.read_float32(a,b)`
+
+`X.U64(a,b)` = `File.read_uint64(a,b)`\
+`X.I64(a,b)` = `File.read_int64(a,b)`\
+`X.F64(a,b)` = `File.read_float64(a,b)`
+
+`X.SA(a,b)` = `File.read_ansiString(a,b)`\
+`X.SC(a,b,c)` = `File.read_codePageString(a,b,c)`\
+`X.UСSD(a,b)` = `File.read_ucsdString(a,b)`\
+`X.SU8(a,b,c)` = `File.read_utf8String(a,b,c)`\
+`X.SU16(a,b,c)` = `File.read_unicodeString(a,b,c)`
+
+`X.Sz()` = `File.getSize()`\
+`X.fSig(a,b,c)` = `File.findSignature(a,b,c)`\
+`X.fStr(a,b,c)` = `File.findString(a,b,c)`\
+`X.c(a,b)` = `File.compare(a,b)`
