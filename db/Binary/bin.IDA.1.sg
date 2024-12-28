@@ -1,11 +1,11 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 // Status: WIP
 
 init("format", "");
 includeScript("zlib");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 0x20) {
         if (Binary.compare("'IDA'..0000") && Binary.compare("DDCCBBAA", 0x1A)) {
             var nVer = Binary.read_uint16(0x1E);
@@ -74,5 +74,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

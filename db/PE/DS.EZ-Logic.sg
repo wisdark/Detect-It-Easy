@@ -1,6 +1,6 @@
 init("compiler", "EZ-Logic");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isOverlayPresent()) {
         if (PE.compareOverlay("000000000000657A2D2E2E0000007E0076302E3100")) {
             sVersion = "0.01";
@@ -8,5 +8,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,6 +1,6 @@
 init("installer", "Store Installer");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isNET()) {
         if (PE.getVersionStringInfo("InternalName") == "StoreInstaller.exe")
         {
@@ -9,5 +9,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion);
+    return result();
 }

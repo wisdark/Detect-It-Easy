@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("scrambler", "UnoPiX");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("60E8070000006168........C383042418C3")) {
         sVersion = "0.75";
         bDetected = true;
@@ -23,5 +23,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

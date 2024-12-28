@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "Thinstall(VMware ThinApp)");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("6A00FF1520504000E8D4F8FFFFE9E9ADFFFFFF8BC18B4C2404898829040000C7400C010000000FB64901D1E9894810C7401480000000C204008B442404C7410C010000008981290400000FB64001D1E8894110C741")) {
         sVersion = "2.403";
         bDetected = true;
@@ -46,7 +46,7 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     } else if (PE.compareEP("9C60E80000000058BB........2BC35068........68........68........E8........E9")) {
         sVersion = "2.7XX";
         bDetected = true;
-    } else if (PE.compareEP("9C6068'StAl'68'ThIn'E80000000058BB371F00002BC35068")) {
+    } else if (PE.compareEP("9C6068'StAl'68'ThIn'E80000000058BB........2BC35068")) {
         if (PE.compareEP("0028", 32)) {
             sVersion = "3.035-3.043";
         } else if (PE.compareEP("002C", 32)) {
@@ -85,5 +85,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // 1995-2007 Borland Delphi
 // 2007-2014 Embarcadero Delphi;
 // https://docwiki.embarcadero.com/RADStudio/Alexandria/en/Compiler_Versions
@@ -220,7 +220,7 @@ function getVersion() {
     return 0;
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (bBorlandC) { // can't be Delphi if it's already C/C++
         return null;
     }
@@ -265,5 +265,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("Object Pascal (Delphi)", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

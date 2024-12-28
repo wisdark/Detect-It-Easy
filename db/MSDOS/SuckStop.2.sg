@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "SuckStop");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MSDOS.compareEP("EB......BE....B430CD21EB..9B")) {
         sVersion = "1.11";
         bDetected = true;
@@ -23,5 +23,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

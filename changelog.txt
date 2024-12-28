@@ -1,3 +1,15 @@
+3.10
+-----------------------------------------------------------------------
+[+] Bundle for Ubuntu 24.04 and 24.10
+[+] APK/DEX/NPM/Amiga support
+[+] Improved "Visualization" widget
+[+] Improved Heuristic module for PE (thanks to DosX_dev)
+[+] New "extra" database for not basic detections
+[+] New detects and optimization of all scripts (thanks to DosX_dev, hypn0, Kae and all contributors)
+[+] Some GUI changes
+[+] Many bugs have been fixed
+#######################################################################
+
 3.09
 -----------------------------------------------------------------------
 [+] Bundle for Ubuntu 23.10
@@ -49,7 +61,7 @@
 #######################################################################
 3.04
 -----------------------------------------------------------------------
-[+] Source code qt6 compatibility
+[+] Source code Qt6 compatibility
 [+] Signed zip bundle for macOS
 [+] Signed pkg installer for macOS
 [+] New file info module

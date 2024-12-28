@@ -5,7 +5,7 @@
 
 init("protector", "Tencent Security");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     bDetected =
         APK.isArchiveRecordPresent("assets/dexMethod_00oo1l1l.dat") ||
         APK.isArchiveRecordPresent("lib/arm/libshell-supervbasic.2019.so") ||
@@ -13,5 +13,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
     if (bDetected) sVersion = "Enterprise";
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("compiler", "gcc");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     /* if(MACH.isLibraryPresent("libstdc++.6.dylib"))
     {
         sOptions="libstdc++";
@@ -30,5 +30,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("C/C++", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

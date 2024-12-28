@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("format", "");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("'RIFF'........'CDR'")) {
         sName = "CorelDraw graphics (.CDR)";
         bDetected = true;
@@ -15,5 +15,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

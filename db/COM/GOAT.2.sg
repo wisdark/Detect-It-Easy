@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("protector", "GOAT");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("5156505253813c....75$$424a81c3....8bdb595e585a5bb4..ba....cd21b8....cd21474f")) {
         sOptions = "1996 by Martin Overton";
         bDetected = true;
@@ -15,5 +15,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

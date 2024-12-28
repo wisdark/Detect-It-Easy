@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "HidePE by BGCorp");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("6006FC1E07BE909090906A04689010909068")) {
         sVersion = "0.1";
         sOptions = "32Lite 0.03";
@@ -251,5 +251,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

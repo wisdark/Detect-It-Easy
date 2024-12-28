@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("library", "GLIBC");
 
@@ -17,7 +17,7 @@ function getMaxVersion(sValue1, sValue2) {
     return sValue2;
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (ELF.isSectionNamePresent(".dynstr")) {
         var nSection = ELF.getSectionNumber(".dynstr");
 
@@ -45,5 +45,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

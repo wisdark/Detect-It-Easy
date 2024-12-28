@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("installer", "Advanced Installer");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareOverlay("2f30ee1f5e4ee51e")) {
         if (PE.compareEP("e8$$$$$$$$8bff558bec83ec..a1........8365....8365....5357bf........bb........3bc774..85c374..f7d0")) {
             bDetected = true;
@@ -26,5 +26,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

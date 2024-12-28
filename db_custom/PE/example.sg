@@ -2,7 +2,7 @@
 
 init("DETECTION_TYPE", "DETECTION_NAME");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
 
     if (false) {
 
@@ -14,5 +14,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

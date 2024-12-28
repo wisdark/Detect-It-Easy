@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("self-displayer", "List");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("bc....1e2bc0508926....b430cd213c")) {
         sOptions = "by Vernon D. Buerg";
         bDetected = true;
@@ -17,5 +17,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

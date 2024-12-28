@@ -5,8 +5,8 @@
 
 init("protector", "ProGuard");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     bDetected = APK.isArchiveRecordPresent("META-INF/proguard/androidx-annotations.pro");
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

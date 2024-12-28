@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Arjan Onwezen
 
 init("format", "Registry file");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("'REGEDIT4'0D 0A 0D 0A")) {
         bDetected = true;
         sVersion = "v4"
@@ -16,5 +16,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         sOption("UTF-16LE");
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

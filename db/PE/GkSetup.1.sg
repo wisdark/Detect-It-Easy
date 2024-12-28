@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("sfx", "GkSetup SFX");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.findString(PE.getOverlayOffset(), Math.min(0x300, PE.getOverlaySize()), "/SFX") != -1) {
         if (PE.compareEP("e9$$$$$$$$5351525589e583ec..b8........e8........a1........83c0..24..31d229c489e18b1d")) {
             sOptions = "1998 by Gero Kuhn";
@@ -14,5 +14,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

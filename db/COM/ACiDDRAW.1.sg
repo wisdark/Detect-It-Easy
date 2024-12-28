@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("self-displayer", "ACiDDRAW");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("e9$$$$b8....cd10b4..b9....cd10e8....ba....90e8....3d....75..e9....3d....75..e9....3d....75..e9....3d....75..eb")) {
         sVersion = "1.2";
         bDetected = true;
@@ -12,5 +12,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "PESpin");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (!PE.isPEPlus()) {
         if (PE.compareEP("EB016860E8000000008B1C2483C312812BE8B10600FE4BFD822C24")) {
             switch (PE.readByte(PE.nEP + 27)) {
@@ -52,5 +52,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

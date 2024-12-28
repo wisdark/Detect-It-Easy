@@ -1,11 +1,11 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 
 init("library", "wxWidgets");
 
 includeScript("wxWidgets");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (aWx == 1) {
         sOptions = "static";
         bDetected = true;
@@ -23,5 +23,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

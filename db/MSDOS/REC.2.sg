@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("protector", "REC");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MSDOS.compareEP("061eb430cd213c..73..33c00650cbbf....8b36....2bf781fe....eb$$52ba....5aeb")) {
         sVersion = "0.33-0.35";
         bDetected = true;
@@ -18,5 +18,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

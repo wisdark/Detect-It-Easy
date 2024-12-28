@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 
 init("compiler", "Borland C/C++");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var nOffset = 0;
     if (MSDOS.compareEP("FB")) {
         nOffset = 1;
@@ -84,5 +84,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang(sName.indexOf("C++") !== -1 ? "C" : "C++", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

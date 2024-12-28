@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 // Status: WIP
 
 init("audio", "FMOD Sample Bank (.FSB)");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 0x24) {
         if (Binary.compare("'FSB'..")) {
             var nSamples, nExtVer, nMode;
@@ -101,5 +101,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

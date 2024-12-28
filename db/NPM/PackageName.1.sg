@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("package", "");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var _sName = NPM.getPackageJsonRecord("name");
 
     if (_sName != "") {
@@ -11,5 +11,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

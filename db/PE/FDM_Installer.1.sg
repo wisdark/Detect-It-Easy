@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: A.S.L <asl@onet.eu>
 
 init("installer", "FDM Installer");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareOverlay("'###FDMDATA###'")) {
         if (PE.compareEP("558BEC6AFF6820714000682C364000")) {
             sVersion = "1.0";
@@ -14,5 +14,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

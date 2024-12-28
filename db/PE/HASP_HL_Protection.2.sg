@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: ajax
 // History:
 // 23:45 16.01.2013 add HASP SRM x32 1.x and HASP SRM x64 1.x
@@ -7,7 +7,7 @@
 
 init("protector", "HASP HL/SRM Protection");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (!PE.isPEPlus()) {
         if (PE.compareEP("558bec535657608bc4a3........b8........2b05........a3........833d..........74..8b0d........51ff15")) {
             sVersion = "4.X";
@@ -30,5 +30,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

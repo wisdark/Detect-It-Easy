@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: r0da https://github.com/whereisr0da
 
 init("protector", "KoiVM");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
 
     if (PE.isNET() && _getNumberOfResults("protector") <= 1) {
         if (PE.isSignatureInSectionPresent(0, "'KoiVM.Runtime'")) {
@@ -16,5 +16,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         sVersion = "2.0+";
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

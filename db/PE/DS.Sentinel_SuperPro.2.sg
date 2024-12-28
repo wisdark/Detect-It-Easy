@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "Sentinel SuperPro");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("68........6A016A00FF15........A3........FF15........33C93DB7000000A1")) {
         sVersion = "6.4.0";
         sOptions = "Automatic Protection";
@@ -17,5 +17,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

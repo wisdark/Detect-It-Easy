@@ -4,7 +4,7 @@
 init("format", "DjVu document (.DJVU)");
 includeScript("read");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var sdjv = false;
     if (X.c("'AT&TFORM'"))
         if (X.c("'DJVM'........00", 12)) sVersion = 'multi-page';
@@ -108,5 +108,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
         sOption(outSz(sz), 'sz:')
     }
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

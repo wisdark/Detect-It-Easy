@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 
 init("image", "Windows Bitmap");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 40) {
         if (Binary.compare("'BM'")) {
             if (Binary.getSize() >= Binary.readDword(2)) {
@@ -44,5 +44,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

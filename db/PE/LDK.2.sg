@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: sendersu
 /*
 If errors pls contact sendersu on exelab.ru
@@ -6,7 +6,7 @@ If errors pls contact sendersu on exelab.ru
 
 init("protector", "SafeNet Sentinel LDK");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.getNumberOfSections() == 4) {
         if (PE.isSectionNamePresent(".AKS1") &&
             PE.isSectionNamePresent(".AKS2") &&
@@ -17,5 +17,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

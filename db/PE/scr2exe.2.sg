@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: sendersu
 // Edited: DosX
 
@@ -6,7 +6,7 @@
 
 init("packer", "SCREEN2EXE/SCREEN2SWF");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var rdataSection = PE.section[".rdata"];
 
     if (!PE.is64() && PE.compareEP("E8........E9........8BFF558BEC83EC..5356") && rdataSection && PE.findString(rdataSection.FileOffset, rdataSection.FileSize, "Video created by SCREEN2EXE/SCREEN2SWF") != -1) {
@@ -14,5 +14,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         sVersion = PE.getFileVersion().split(", ").join(".");
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

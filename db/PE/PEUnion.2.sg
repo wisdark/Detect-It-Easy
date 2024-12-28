@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: KDSS-Research
 // Edited: DosX
 
 init("cryptor", "PEUnion");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     //32bit RUNPE stub
     if (!PE.isNET()) {
         bDetected = true;
@@ -78,9 +78,7 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
     }
 
-    sVersion = "v4.0";
-    return result(bShowType, bShowVersion, bShowOptions);
-}
+    sVersion = "v4.0";}
 
 
 // validateReferences by DosX
@@ -98,6 +96,8 @@ function validateReferences(isPositive, references, section) {
         }
     }
     return false;
+
+    return result();
 }
 
 // and validateNativeImports by DosX also

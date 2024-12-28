@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Authors: hypn0 <hypn0@mail.ru>, Kaens (TG@kaens), LinXP
 
 init("archive", "");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("a596fdff")) {
         bDetected = true;
         sName = "FTCOMP";
@@ -294,5 +294,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
         sName = "Facebook Zstandard/ZSTD compressed data (.ZST)";
     }
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

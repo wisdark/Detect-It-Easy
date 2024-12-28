@@ -1,9 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("compiler", "Zig");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
-    if (PE.compare("'MZ'78000100000004000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000780000000E1FBA0E00B409CD21B8014CCD21'This program cannot be run in DOS mode.$'0000'PE'0000")) {
+function detect() {
+    if (PE.compare("'MZ'78000100000004000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000780000000E1FBA0E00B409CD21B8014CCD21'This program cannot be run in DOS mode.\
+0000'PE'0000")) {
         if ((PE.section[".rdata"]) && (PE.isDeepScan())) {
             var nOffset = PE.section[".rdata"].FileOffset;
             var nSize = PE.section[".rdata"].FileSize;
@@ -16,5 +17,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("Zig", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

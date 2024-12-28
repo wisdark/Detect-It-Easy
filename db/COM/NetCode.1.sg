@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("converter", "NetCode");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("'T_OOWW3=XXWX5 2PY5w3P_-l.P-KD1Ep-OLPZ-pJP-pw40PQX5fsPu'")) {
         sVersion = "1.11";
         sOptions = "by JauMing Tseng //Nide";
@@ -14,5 +14,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

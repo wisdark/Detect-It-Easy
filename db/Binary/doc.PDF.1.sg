@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("format", "PDF");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (/^\%PDF-\d+\.\d+/.test(File.read_ansiString(0, 10))) {
         sVersion = File.getString(5, 3);
         bDetected = true;
@@ -12,5 +12,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         if (c) sOptions = "with binary data"
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

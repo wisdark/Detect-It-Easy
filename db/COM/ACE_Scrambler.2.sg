@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("protector", "A.C.E. Scrambler");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("2c..fec024..34..fec824..34..bb....0c..eb$$24..0c..81eb....f6d8eb$$2c..fec0ffe3")) {
         sOptions = "1996";
         bDetected = true;
@@ -30,5 +30,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

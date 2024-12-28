@@ -2,9 +2,10 @@
 
 init("protector", "PwdProtect");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isSectionNamePresent(".pwdprot")) {
         bDetected = true;
     }
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jupiter
 
 /*
@@ -8,7 +8,7 @@ https://www.xojo.com
 
 init("framework", "Xojo");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.section["xojoinit"]) {
         // plugins
         if (PE.section["xojoplgn"]) {
@@ -25,5 +25,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

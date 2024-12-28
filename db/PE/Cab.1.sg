@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 
 init("sfx", "Microsoft Cabinet");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareOverlay("'wextract'", 16)) {
         // The version is probably for what's being installed, not what's doing
         // the installing; it does seem, though, the raw product version is for
@@ -56,5 +56,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

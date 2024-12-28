@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("packer", "UPX");
 
@@ -37,7 +37,7 @@ function getUPXOptions(nOffset) {
     }
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var nSize = ELF.getSize();
     if (ELF.compare("'UPX!'", nSize - 0x24)) {
         getUPXOptions(nSize - 0x20);
@@ -53,5 +53,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

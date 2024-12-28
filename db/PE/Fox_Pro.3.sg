@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("library", "Fox Pro");
 
@@ -16,10 +16,10 @@ function getVersion() {
     return 0;
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (getVersion()) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

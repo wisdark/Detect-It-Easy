@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 
 init("camera", "");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.isJpeg()) {
         sName = Binary.getJpegExifCameraName();
 
@@ -12,5 +12,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

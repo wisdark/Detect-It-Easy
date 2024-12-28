@@ -5,7 +5,7 @@
 
 init("protector", "BangBang Reinforcement");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     bDetected =
         APK.isArchiveRecordPresent("assets/autostreets.com_cert_chain.cer") ||
         APK.isArchiveRecordPresent("assets/da.js") ||
@@ -23,5 +23,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
     if (bDetected) sVersion = "Enterprise";
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

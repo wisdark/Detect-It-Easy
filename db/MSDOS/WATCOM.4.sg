@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 
 init("compiler", "WATCOM C");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MSDOS.compareEP("E9....'WATCOM C'")) {
         bDetected = true;
     } else if (MSDOS.isSignaturePresent(0, Math.min(2048, MSDOS.getSize()), "'WATCOM C'")) {
@@ -47,9 +47,13 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     } else if (MSDOS.compareEP("eb$$2e8c06....2e8c16....2e8926....2ea3....2e8916....2e891e....2e8c1e....fa8cc88ed0bc....fbe8....8bd8fa2e8e16")) {
         sVersion = "1992 by WATCOM Systems Inc.";
         bDetected = true;
+    } else if (MSDOS.compareEP("EB....00'*** NULL assignment detected'00'")) {
+        sName = "Open Watcom C/C++16";
+        sVersion = "2.0";
+        bDetected = true;
     }
 
-
     _setLang(sName.indexOf("C++") !== -1 ? "C++" : "C", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

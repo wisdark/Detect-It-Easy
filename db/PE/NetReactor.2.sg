@@ -1,8 +1,10 @@
-// DIE's signature file
 // Author: DosX
 // E-Mail: collab@kay-software.ru
 // GitHub: https://github.com/DosX-dev
 // Telegram: @DosX_dev
+
+// https://www.eziriz.com/dotnet_reactor.htm
+init("protector", ".NET Reactor");
 
 function detect() {
     var isDetected = false;
@@ -98,5 +100,4 @@ function detect() {
             _setResult("protector", ".NET Reactor", version, options);
         }
     }
-
 }

@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("packer", "COMPACK");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("BE....E8....5D83C5..55505351520E070E1F8BCE8D72..BF....D1E9FD57F3A5")) {
         sVersion = "4.5";
         bDetected = true;
@@ -28,5 +28,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

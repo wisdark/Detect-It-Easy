@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("protector", "Xtreamlok (SoftWrap)");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("9090eb$$525351565755e8000000005d81ed........e8$$$$$$$$6a..e9")) {
         sVersion = "1.x-3.x";
         bDetected = true;
@@ -18,5 +18,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

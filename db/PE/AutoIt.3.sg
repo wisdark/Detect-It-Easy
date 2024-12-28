@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 // https://en.wikipedia.org/wiki/AutoIt
 init("format", "AutoIt");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.resource["SCRIPT"]) {
         sVersion = "3.XX";
         bDetected = true;
@@ -17,5 +17,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

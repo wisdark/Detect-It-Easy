@@ -5,8 +5,8 @@
 
 init("protector", "BaiduProtection");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     bDetected = DEX.isDexItemStringPresent("Lcom/baidu/protect/StubApplication;");
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

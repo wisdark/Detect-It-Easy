@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 
 init("image", "DirectDraw Surface (.DDS)");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 0x40) {
         if (Binary.compare("'DDS '7C000000")) {
             bDetected = true;
@@ -22,5 +22,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 // Status: WIP
 
 init("archive", "Windows Imaging Format");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 9) {
 
         if (Binary.compare("'MSWIM'000000")) {
@@ -39,5 +39,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 
 includeScript("cab");
@@ -12,7 +12,7 @@ function cab_resource(bShowOptions) {
     return 0;
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect(bShowOptions) {
     if (!detect_Cab(PE.getOverlayOffset(), PE.getOverlaySize(), bShowOptions) &&
         !cab_resource(bShowOptions)) {
         if (PE.section[".rsrc"]) {
@@ -29,5 +29,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 
 includeScript("cab");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
-    if (!detect_Cab(0, Binary.getSize(), bShowOptions)) {
+function detect() {
+    if (!detect_Cab(0, Binary.getSize())) {
         if (Binary.compare("'ISc('")) {
             sName = "InstallShield Cabinet File";
             var nVer = Binary.readWord(4);
@@ -21,5 +21,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

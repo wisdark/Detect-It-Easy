@@ -5,10 +5,10 @@
 
 init("library", "OpenCL");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isLibraryPresentExp(/opencl/i)) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -5,7 +5,7 @@
 
 init("protector", "DexProtector");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     bDetected =
         APK.isArchiveRecordPresent("assets/classes.dex.dat") ||
         APK.isArchiveRecordPresent("assets/dp.arm-v7.so.dat") ||
@@ -19,5 +19,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         APK.isArchiveRecordPresent("assets/dp-lib/dp.kotlin-v1.lua.mph") ||
         APK.isArchiveRecordPresent("assets/dexprotect/classes.dex.dat");
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

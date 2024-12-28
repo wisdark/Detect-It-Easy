@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // doc-ref: https://github.com/dsnet/compress/blob/master/doc/bzip2-format.pdf
 init("archive", "");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 9) {
         if (Binary.compare("'BZ0'")) {
             sName = "BZip1 compressed data (.BZ)"
@@ -16,5 +16,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

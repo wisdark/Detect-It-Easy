@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "IntelliProtector");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var nLastSectionOffset = PE.section[PE.nLastSection].FileOffset;
     if (PE.compare("E9........CC", nLastSectionOffset)) {
         var nLastSectionSize = PE.section[PE.nLastSection].FileSize;
@@ -13,5 +13,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

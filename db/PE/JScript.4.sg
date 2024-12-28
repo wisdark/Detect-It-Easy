@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("compiler", "JScript");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isNET()) {
         if (PE.isNetObjectPresent("Microsoft.JScript.Vsa")) {
             bDetected = true;
@@ -10,5 +10,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("JavaScript", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

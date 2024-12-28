@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("packer", "DxPack");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("60E8........5D8BFD81ED........2BB9........81EF........83BD..........0F84")) {
         switch (PE.readByte(PE.nEP + 32)) {
             case 0xB9:
@@ -18,5 +18,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

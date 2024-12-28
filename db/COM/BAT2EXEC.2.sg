@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("compiler", "BAT2EXEC");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (COM.compare("eb$$fcbd....8b....8b......8b......b44acd21a1....8986")) {
         sOptions = "by Douglas Boling";
         sVersion = "1.5";
@@ -14,5 +14,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

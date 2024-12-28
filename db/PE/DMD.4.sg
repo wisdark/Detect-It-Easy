@@ -1,11 +1,11 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // 27.12.2023 @DosX_dev add strings
 
 // TODO: Rewrite this script
 
 init("compiler", "DMD");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (!PE.isNET() && PE.isSectionNamePresent(".minfo") && PE.isSectionNamePresent("._deh")) {
         bDetected = true;
     }
@@ -39,5 +39,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("D", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

@@ -7,7 +7,7 @@ init("packer", "PyInstaller"); // python = 💩
 
 includeScript("python");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     const overlaySignatureDetected = PE.compareOverlay("78da");
 
 
@@ -67,5 +67,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("Python", bDetected, version);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

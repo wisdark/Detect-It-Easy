@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("installer", "Wise Installer");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.getOverlaySize() > 80) {
         var nOffset = PE.getOverlayOffset() + 77;
         if (PE.readDword(nOffset) == PE.getSize()) {
@@ -48,5 +48,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

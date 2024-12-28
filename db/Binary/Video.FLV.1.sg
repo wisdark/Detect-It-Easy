@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Tembo (http://tembolab.pl/products/executable-image-viewer.html)
 
 init("format", "Flash Video");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() > 37) {
         if (Binary.compare("'FLV'") && Binary.compare("'onMetaData'", 27)) {
             sVersion = "";
@@ -12,5 +12,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // created by A.S.L - asl@onet.eu - 2019
 // 2020.07 fixed
 
 init("installer", "Adobe FlashPlayer downloader");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if ((PE.compareEP("B8......005064FF3500")) && (PE.isOverlayPresent())) {
         if (PE.getVersionStringInfo("InternalName") == "Adobe Download Manager") {
             sVersion = "2.0";
@@ -13,5 +13,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("operation system", "Windows");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (LE.isVerbose()) {
         sName = LE.getOperationSystemName();
         sVersion = LE.getOperationSystemVersion();
@@ -11,5 +11,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

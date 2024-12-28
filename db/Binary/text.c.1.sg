@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 
 init("source", "C/C++");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var sText = Binary.getHeaderString();
     if (/^#ifndef (\w+).*\s+^#define \1/m.test(sText) ||
         /#\s*pragma (?:once|hdrstop)/.test(sText)) {
@@ -31,5 +31,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

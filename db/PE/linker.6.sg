@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("linker", "unknown", PE.getCompilerVersion(), PE.getGeneralOptionsEx());
 
@@ -7,8 +7,8 @@ includeScript("RosASM");
 includeScript("SpASM");
 includeScript("FPC");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
-    if (PE.compare("'MZ'90000300000004000000FFFF0000B800000000000000400000000000000000000000000000000000000000000000000000000000000000000000800000000E1FBA0E00B409CD21B8014CCD21'This program cannot be run in DOS mode.\r\r\n$'00000000000000'PE'0000")) {
+function detect() {
+    if (PE.compare("'MZ'90000300000004000000FFFF0000B800000000000000400000000000000000000000000000000000000000000000000000000000000000000000800000000E1FBA0E00B409CD21B8014CCD21'This program cannot be run in DOS mode.\r\r\n$'0000000000000'PE'0000")) {
         var nMajor = PE.getMajorLinkerVersion();
         var nMinor = PE.getMinorLinkerVersion();
         if (nMajor == 2) {
@@ -50,7 +50,7 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         sName = "Watcom Linker";
         sVersion += "*";
         bDetected = true;
-    } else if (PE.compare("'MZ'6c000100000002000000ffff000000000000110000004000000000000000'Win'....' Program!\r\n$'b409ba0001cd21b44ccd2160000000'GoLink, GoAsm www.GoDevTool.com'00")) {
+    } else if (PE.compare("'MZ'6c000100000002000000ffff000000000000110000004000000000000000'Win'....' Program!\r\n\b409ba0001cd21b44ccd2160000000'GoLink, GoAsm www.GoDevTool.com'00")) {
         sName = "GoLink";
         bDetected = true;
     }
@@ -96,5 +96,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = false;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

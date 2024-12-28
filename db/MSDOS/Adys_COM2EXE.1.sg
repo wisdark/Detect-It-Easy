@@ -1,11 +1,11 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("converter", "Adys COM2EXE");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MSDOS.compare("'Ady'27", 28)) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("compiler", "Zig");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if ((MACH.isSectionNamePresent("__cstring")) && (MACH.isDeepScan())) {
         var nIndex = MACH.getSectionNumber("__cstring");
 
@@ -17,5 +17,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("Zig", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

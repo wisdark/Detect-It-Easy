@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 // doc-ref: https://www.sqlite.org/fileformat.html
 
 init("format", "");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("'SQLite format 3'00")) {
         sName = "SQLite 3 database (.SQLITE)";
         bDetected = true;
@@ -41,5 +41,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

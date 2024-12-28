@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "HackShield");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var nImportSection = PE.getImportSection();
     if (nImportSection != 0) {
         var nOffset = PE.section[nImportSection].FileOffset;
@@ -13,5 +13,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

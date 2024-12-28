@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
-init("scrambler", "UPX scrambler");
+init("tool", "UPX scrambler");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("E8000000005983C10751C3C3BE........83EC04893424B9800000008136........50B80400000050033424585883E903E2E9EBD6")) {
         sVersion = "3.06";
         bDetected = true;
@@ -16,5 +16,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

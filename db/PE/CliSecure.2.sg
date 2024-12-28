@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "CliSecure");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isNET()) {
         if (PE.isNetObjectPresent("ObfuscatedByCliSecureAttribute")) {
             sVersion = "4.0-5.X";
@@ -17,5 +17,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

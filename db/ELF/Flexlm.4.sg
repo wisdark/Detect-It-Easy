@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("library", "");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var nOffset = ELF.findSignature(0, ELF.getSize(), "'@(#) F'");
     if (nOffset != -1) {
         sName = ELF.getString(nOffset, 200).match(/\w\S*/i);
@@ -11,5 +11,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

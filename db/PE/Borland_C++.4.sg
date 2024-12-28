@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // https://docwiki.embarcadero.com/RADStudio/Alexandria/en/Compiler_Versions
 // coauthor: sendersu (If errors pls contact sendersu on cracklab.team)
 
@@ -6,7 +6,7 @@ init("compiler", "Borland C++");
 
 includeScript("Borland");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     bDetected = bBorlandC;
     if (bDetected == 2) {
         sVersion = "1999";
@@ -32,5 +32,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("C++", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

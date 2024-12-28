@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("packer", "BeRo");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var nEP = PE.compareEP("837C2408010F85") ? 11 : 0;
     if (PE.compareEP("60BE........BF........FCB28033DBA4B302E8", nEP)) {
         sVersion = "1.00";
@@ -33,5 +33,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

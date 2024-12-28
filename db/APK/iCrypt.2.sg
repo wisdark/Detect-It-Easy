@@ -5,7 +5,7 @@
 
 init("protector", "iCrypt");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     bDetected =
         APK.isArchiveRecordPresent("assets/af.bin") ||
         APK.isArchiveRecordPresent("assets/ijiami.ajm") ||
@@ -20,5 +20,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
     if (bDetected) sVersion = "Enterprise";
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

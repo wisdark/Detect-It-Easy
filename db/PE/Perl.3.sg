@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hbasrc <rob.cheung+git@gmail.com>
 
 init("library", "Perl5 xs");
 
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (!PE.isDll()) return;
 
     var sLib = PE.isLibraryPresentExp(/perl(5)_?(\d\d*)/i);
@@ -15,7 +15,7 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
         _setLang("Perl", bDetected);
 
-        return result(bShowType, bShowVersion, bShowOptions);
+    
     }
 
     var sInterp = PE.isExportFunctionPresentExp("Perl_sv_bless|perl_parse");
@@ -27,6 +27,8 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
         return _setResult("library", "Perl Runtime", sVersion, "");
     }
+
+    return result();
 }
 
 function getPerlVersion() {

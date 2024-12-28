@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
-init("crypter", "Stone's PE Encryptor");
+init("cryptor", "Stone's PE Encryptor");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("555756525153E8........5D8BD581ED........2B95........83EA0B8995")) {
         switch (PE.getEPSignature(35, 2)) {
             case "8DB5":
@@ -18,5 +18,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

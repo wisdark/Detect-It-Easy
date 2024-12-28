@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "SimbiOZ");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("5060E8000000005D81ED0710400068800B00008D851F10400050E8840B0000")) {
         bDetected = true;
     } else if (PE.compareEP("57578D7C240450B800......AB585FC3")) {
@@ -15,5 +15,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

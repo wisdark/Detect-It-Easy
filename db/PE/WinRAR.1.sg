@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("sfx", "WinRAR");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareOverlay("'Rar!'")) {
         if ((PE.resource["STARTDLG"] && PE.resource["LICENSEDLG"]) || (PE.resource["INSTALL"] && PE.resource["SETUP"])) {
             bDetected = true;
@@ -14,5 +14,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

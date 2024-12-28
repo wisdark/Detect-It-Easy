@@ -1,80 +1,83 @@
+# 🔍 Detect It Easy (DiE)
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NF3FBD3KHMXDN)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/horsicq/DIE-engine.svg)](http://ntinfo.biz)
 [![GitHub All Releases](https://img.shields.io/github/downloads/horsicq/DIE-engine/total.svg)](http://ntinfo.biz)
 [![gitlocalized ](https://gitlocalize.com/repo/4736/whole_project/badge.svg)](https://github.com/horsicq/XTranslation)
 
-[![OS Linux](https://img.shields.io/badge/os-linux-brightgreen)](https://github.com/horsicq/DIE-engine/releases)
-[![OS Windows](https://img.shields.io/badge/os-windows-brightgreen)](https://github.com/horsicq/DIE-engine/releases)
-[![OS MacOS](https://img.shields.io/badge/os-macos-brightgreen)](https://github.com/horsicq/DIE-engine/releases)
+**Detect It Easy (DiE)** is a powerful tool for file type identification, popular among **malware analysts**, **cybersecurity experts**, and **reverse engineers** worldwide. Supporting both **signature-based** and **heuristic analysis**, DiE enables efficient file inspections across a broad range of platforms, including **Windows, Linux, and MacOS**. Its adaptable, script-driven detection architecture makes it one of the most versatile tools in the field, with a comprehensive list of supported OS images.
 
-# Detect It Easy
+## 🚀 Getting Started
 
-> * ### [DOWNLOAD **RELEASE**](https://github.com/horsicq/DIE-engine/releases)
-> * ### [DOWNLOAD LATEST **BETA**](https://github.com/horsicq/Detect-It-Easy/releases/tag/Beta)
-> * #### [DIE API Library (for developers)](https://github.com/horsicq/die_library)
+- **[💎 Download release](https://github.com/horsicq/DIE-engine/releases)**
+- **[🧪 Download dev/beta](https://github.com/horsicq/Detect-It-Easy/releases/tag/Beta)**
+- **[🚀 DIE API Library (for Developers)](https://github.com/horsicq/die_library)**
+- [📋 Changelog](https://github.com/horsicq/Detect-It-Easy/blob/master/changelog.txt)
+- [💬 Contribute to Translations](https://github.com/horsicq/XTranslation)
 
-- Changelog: https://github.com/horsicq/Detect-It-Easy/blob/master/changelog.txt
+![Screenshot](docs/1.png)
 
-You can help with translation: https://github.com/horsicq/XTranslation
+## 💡 Why Use Detect It Easy?
 
-![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/1.png "1")
-![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/2.png "2")
-![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/3.png "3")
-![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/4.png "4")
-![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/docs/5.png "5")
+Detect It Easy’s **flexible signature system** and **scripting capabilities** make it an essential tool for **malware analysis** and **digital forensics**. With traditional static analyzers often limited in scope and prone to false positives, DiE’s customizable design enables precise integration of new detection logic, ensuring reliable results across diverse file types.
 
-**Detect It Easy**, or abbreviated "DIE" is a program for determining types of files.
+![Screenshot](docs/2.png)
 
-DIE is a cross-platform application, apart from Windows version there are also
-available versions for Linux and Mac OS.
+### Key Advantages:
 
-Many programs of the kind (PEID, PE tools) allow to use third-party signatures.
-Unfortunately, those signatures scan only bytes by the pre-set mask, and it is
-not possible to specify additional parameters. As the result, false triggering
-often occur. More complicated algorithms are usually strictly set in the program
-itself. Hence, to add a new complex detect one needs to recompile the entire
-project. No one, except the authors themselves, can change the algorithm of
-a detect. As time passes, such programs lose relevance without the constant support.
+- **Flexible Signature Management**: Easily create, modify, and optimize signatures.
+- **Cross-Platform Support**: Runs on Windows, Linux, and MacOS.
+- **Minimal False Positives**: Combined signature and heuristic analysis ensures high detection accuracy.
 
-**Detect It Easy** has totally open architecture of signatures. You can easily
-add your own algorithms of detects or modify those that already exist. This
-is achieved by using scripts. The script language is very similar to JavaScript
-and any person, who understands the basics of programming, will understand easily
-how it works. Possibly, someone may decide the scripts are working very slow.
-Indeed, scripts run slower than compiled code, but, thanks to the good optimization
-of Script Engine, this doesn't cause any special inconvenience. The possibilities
-of open architecture compensate these limitations.
+## 📄 Supported File Types
 
-DIE exists in three versions. Basic version ("die"), Lite version ("diel") and
-console version ("diec"). All the three use the same signatures, which are located
-in the folder "db". If you open this folder, nested sub-folders will be found
-("Binary", "PE" and others). The names of sub-folders correspond to the types of files.
-First, DIE determines the type of file, and then sequentially loads all the signatures,
-which lie in the corresponding folder. Currently the program defines the following types:
+Detect It Easy supports a wide range of executable and archive types, including:
 
-- MSDOS executable files MS-DOS
-- PE executable files Windows
-- ELF executable files Linux
-- MACH executable files Mac OS
-- Binary all other files
+- **PE** (Portable Executable format for Windows)
+- **ELF** (Executable and Linkable Format for Linux)
+- **APK** (Android Application Package)
+- **IPA** (iOS Application Package)
+- **JAR** (Java Archive)
+- **ZIP** (Compressed archives)
+- **DEX** (Dalvik Executable for Android)
+- **MS-DOS** (MS-DOS executable files)
+- **COM** (Simple executable format for DOS)
+- **LE/LX** (Linear Executable for OS/2)
+- **MACH** (Mach-O files for MacOS)
+- **NPM** (JavaScript packages)
+- **Amiga** (Executable format for Amiga computers)
+- **Binary** (Other unclassified files)
 
-# Installing
+Unknown formats undergo heuristic analysis, providing identification for both known and unrecognized files.
 
-### Using installation packages
+## 🔑 Key Features
 
-- Windows: [die](https://community.chocolatey.org/packages/die) on Chocolatey (Thanks [**chtof**](https://github.com/chtof) and [**Rob Reynolds**](https://github.com/ferventcoder))
-- Parrot OS: Package name **detect-it-easy** (Thanks [**Nong Hoang Tu**](https://github.com/dmknght))
-- Arch Linux: Aur package [detect-it-easy-git](https://aur.archlinux.org/packages/detect-it-easy-git/) (Thanks [**Arnaud Dovi**](https://github.com/class101))
-- [REMnux](https://remnux.org): (Thanks [**REMnux team**](https://twitter.com/REMnux/status/1401935989266919426))
-- openSUSE: [detect-it-easy](https://build.opensuse.org/package/show/home:mnhauke/detect-it-easy) (Thanks Martin Hauke)
+- **Flexible Signature Management**: Define or modify detection signatures.
+- **Scripted Detection**: Use a JavaScript-like scripting language for custom detection algorithms.
+- **Cross-Platform Compatibility**: Available for Windows, Linux, and MacOS.
+- **Reduced False Positives**: Combines signature and heuristic scanning for accuracy.
 
-### Build from source
+## 📥 Installation
 
-Build instructions can be found in [BUILD.md](docs/BUILD.md).
+### 📦 Install via Package Managers
 
-### Docker install
+- **Windows**: [Chocolatey](https://community.chocolatey.org/packages/die) 
+- **Linux**:
+  - **Parrot OS**: Package name `detect-it-easy`
+  - **Arch Linux**: AUR package [detect-it-easy-git](https://aur.archlinux.org/packages/detect-it-easy-git/)
+  - **openSUSE**: [OBS](https://build.opensuse.org/package/show/home:mnhauke/detect-it-easy)
+  - **REMnux**: Malware analysis distribution
 
-You can also run DIE with [Docker](https://www.docker.com/community-edition)! Of course, this requires that you have git and Docker installed.
+> [!NOTE]
+> Use **Detect It Easy** bot via **Telegram** to quickly check files: [**@detectiteasy_bot**](https://t.me/detectiteasy_bot)
+
+### ⚙️ Build from Source
+
+See the [BUILD.md](docs/BUILD.md) for detailed instructions.
+
+### 🐳 Docker Installation
+
+Run DiE in a Docker container:
 
 ```bash
 git clone --recursive https://github.com/horsicq/Detect-It-Easy
@@ -82,28 +85,30 @@ cd Detect-It-Easy/
 docker build . -t horsicq:diec
 ```
 
-# Usage
+## 🖥️ Usage
 
-### detect-it-easy has 3 variants
+Detect It Easy offers three versions:
 
-- `die` GUI version
-- `diec` console version
-- `diel` GUI lite version
+- **die** - Graphical interface.
+- **diec** - Command-line version for batch processing.
+- **diel** - Lightweight GUI version.
 
-Detailed usage instructions can be found in [RUN.md](docs/RUN.md).
+For detailed usage, refer to the [RUN.md](docs/RUN.md).
 
-# Telegram Bot
+### 🔎 Example Use Cases
 
-* ### [@detectiteasy_bot](https://t.me/detectiteasy_bot)
+- **Malware Analysis**: Identify file types, packers, or protections.
+- **Security Audits**: Determine executable file types and potential security risks.
+- **Software Forensics**: Inspect software components and validate compliance.
 
-# Thanks to all the people who already contributed!
+## 🏆 Special Thanks
+
+Thanks to all contributors!
 
 <a href="https://github.com/horsicq/Detect-It-Easy/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=horsicq/Detect-It-Easy" />
+    <img src="https://contrib.rocks/image?repo=horsicq/Detect-It-Easy" />
 </a>
 
-## Special Thanks
+Thanks to [PELock Software Protection & Reverse Engineering](https://www.pelock.com)
 
-- [PELock Software Protection & Reverse Engineering](https://www.pelock.com)
-
-![alt text](https://github.com/horsicq/Detect-It-Easy/blob/master/mascots/logo.png "Mascot")
+![Mascot](mascots/logo.png)

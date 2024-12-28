@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("installer", "Inno Setup Module");
 
@@ -35,7 +35,7 @@ function getVersion(sSection) {
     return 0;
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareOverlay("'zlb'1A") || PE.compareOverlay("'idska32'1A")) {
         if (!getVersion("DATA")) {
             getVersion(".data");
@@ -93,5 +93,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

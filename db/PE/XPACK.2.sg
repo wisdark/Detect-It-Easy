@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("packer", "XPACK");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.getNumberOfImports() == 1 &&
         PE.getNumberOfImportThunks(0) == 3 &&
         PE.getImportFunctionName(0, 0) == "GetProcAddress" &&
@@ -13,5 +13,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

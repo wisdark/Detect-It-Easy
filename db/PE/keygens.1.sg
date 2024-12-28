@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("keygen", "Keygen");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("6a..e8........a3........c705................c705................c705................c705................c705................a1........a3........6a..ff35........e8........a3........a3........68")) {
         sOptions = "by Dimedrol //CORE";
         bDetected = true;
@@ -21,5 +21,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

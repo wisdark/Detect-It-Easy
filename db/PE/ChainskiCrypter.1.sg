@@ -1,11 +1,11 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("cryptor", "ChainskiCrypter");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isNetObjectPresent("Chainski")) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

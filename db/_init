@@ -1,57 +1,72 @@
-/**
- * The type of the signature. For example <code>compiler</code> or <code>packer</code>.
- */
-var sType;
-/**
- * The name of the signature.
- */
-var sName;
-/**
- * The version of the signature.
- */
-var sVersion;
-/**
- * Options used by the signature.
- */
-var sOptions;
-/**
- * The flag to indicate the signature was found.
- */
-var bDetected;
+includeScript("_debug");
+
+var bDetected,
+    sType,
+    sName,
+    sVersion,
+    sOptions;
 
 /**
- * Initialize a signature.
- * @param {String} [sType="unknown"] - The signature type.
- * @param {String} [sName="unknown"] - The signature name.
- * @param {String} [sVersion=""] - The signature version.
- * @param {String} [sOptions=""] - The signature options.
+ * Initializes the detection process with the given parameters.
+ *
+ * @param {string} sType - The type of the item to detect. Defaults to "unknown".
+ * @param {string} sName - The name of the item to detect. Defaults to "unknown".
+ * @param {string} [sVersion] - The version of the item to detect. Optional.
+ * @param {string} [sOptions] - Additional options for detection. Optional.
  */
-function init() {
-    sType = arguments[0] ? arguments[0] : "unknown";
-    sName = arguments[1] ? arguments[1] : "unknown";
+function init(sTypeInput, sNameInput) {
+    if (!sTypeInput) _error("No input type.");
+
+    sType = sTypeInput;
+    sName = sNameInput;
+
     sVersion = arguments[2] ? arguments[2] : "";
     sOptions = arguments[3] ? arguments[3] : "";
+
     bDetected = false;
 }
 
 /**
- * Append one or more strings.
- * @param {...String} sString - String(s) to append.
- * @returns {String} The new string.
- * @global
- * @example
- * sOptions=sOptions.append("debug",string1);
+ * Processes the detection result and resets the detection variables.
+ * 
+ * If a detection has been made (bDetected is true), this function sets the result
+ * using the _setResult function with the provided type, name, version, and options.
+ * After setting the result, it resets the detection flag (bDetected) to false.
+ * 
+ * Regardless of whether a detection was made, it resets the sName, sVersion, and sOptions
+ * variables to empty strings.
+ */
+function result() {
+    if (bDetected) {
+        _setResult(sType, sName, sVersion, sOptions);
+
+        bDetected = false;
+    }
+
+    sName = String();
+    sVersion = String();
+    sOptions = String();
+
+    var resultValue = bDetected;
+
+    bDetected = false;
+
+    return resultValue;
+}
+
+/**
+ * Gets the primitive value of the current object.
+ * @type {string}
  */
 String.prototype.append = function() {
-    var s = this.valueOf();
-    var sep = ",";
+    var s = this.valueOf(),
+        sep = ",";
+
     if (arguments.length) {
         if (s) s += sep;
-        s += arguments[0];
-        for (var i = 1; i < arguments.length; i++) {
-            s += sep + arguments[i];
-        }
+        s += Array.prototype.join.call(arguments, sep);
     }
+
     return s;
 }
 
@@ -64,20 +79,24 @@ String.prototype.append = function() {
  * @example
  * sOptions=sOptions.appendS("debug","::");
  */
-String.prototype.appendS = function() {
-    var s = this.valueOf();
-    var sep = arguments[1] ? arguments[1] : ",";
-    if (arguments.length) {
+String.prototype.appendS = function(sString, sSep) {
+    var s = this.valueOf(),
+        sep = sSep || ",";
+
+    if (sString) {
         if (s) s += sep;
-        s += arguments[0];
+        s += sString;
     }
-    return s
+
+    return s;
 }
 
-String.prototype.addIfNone = function() {
+String.prototype.addIfNone = function(substring) {
     var s = this.valueOf();
-    if (arguments.length)
-        if (s.indexOf(arguments[0]) < 0) s += arguments[0]
+
+    if (substring && s.indexOf(substring) < 0)
+        s += substring;
+
     return s;
 }
 
@@ -91,38 +110,40 @@ String.prototype.addIfNone = function() {
  * @example
  * var a = 12; ...; if("aba12" === a.padStart(5,"ab")) ...
  */
-String.prototype.padStart = function() {
+String.prototype.padStart = function(targetLength, padString) {
     var s = this.valueOf();
-    if (!s.length || !arguments.length || s.length <= arguments[0].length) return s;
-    var c = 0,
-        p = ' ';
-    if (arguments.length > 1) p = arguments[1].toString();
-    var pp = "";
-    for (var i = 0; i < Math.max(0, arguments[0] - s.length); i++) {
-        pp += p[c];
-        c++;
-        if (c === p.length) c = 0
+
+    targetLength = targetLength >> 0; // truncate if number or convert non-number to 0;
+    padString = String(padString || ' ');
+
+    if (s.length >= targetLength) {
+        return String(s);
     }
-    return pp + s
+
+    targetLength = targetLength - s.length;
+    if (targetLength > padString.length) {
+        padString += padString.repeat(targetLength / padString.length); // append to original to ensure we are longer than needed
+    }
+
+    return padString.slice(0, targetLength) + String(s);
 }
 
-Number.prototype.padStart = function() {
+Number.prototype.padStart = function(targetLength, padString) {
     var s = this.valueOf().toString();
-    if (!arguments.length || s.length >= arguments[0]) return s;
-    var c = 0,
-        p = ' ';
-    if (arguments.length > 1) p = arguments[1].toString();
-    var pp = "";
-    for (var i = 0; i < Math.max(0, arguments[0] - s.length); i++) {
-        pp += p[c];
-        c++;
-        if (c === p.length) c = 0
-    }
-    return pp + s
-}
 
-function debug(messageText) {
-    _setResult("dev-output", messageText, "", "");
+    targetLength = targetLength >> 0; // truncate if number or convert non-number to 0;
+    padString = String(padString || ' ');
+
+    if (s.length >= targetLength) {
+        return s;
+    }
+
+    targetLength = targetLength - s.length;
+    if (targetLength > padString.length) {
+        padString += padString.repeat(Math.ceil(targetLength / padString.length)); // append to original to ensure we are longer than needed
+    }
+
+    return padString.slice(0, targetLength) + s;
 }
 
 includeScript("language");

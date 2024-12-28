@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "Mutate");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MSDOS.compareEP("e8$$$$58e9$$$$2ec606......eb$$1eeb$$50eb$$33c0f872..eb")) {
         sVersion = "1.1 (16,20.05.1996)";
         sOptions = "1996 by PReDaToR 666";
@@ -17,5 +17,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Levis <levintaeyeon@live.com> http://ltops9.wordpress.com/
 
 init("protector", "Confuser");
@@ -14,7 +14,7 @@ function getConfuserVersion() {
     return sResult;
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isNetObjectPresent("ConfusedByAttribute")) {
         var sConfuserVersion = getConfuserVersion();
         if (sConfuserVersion != "") {
@@ -35,5 +35,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

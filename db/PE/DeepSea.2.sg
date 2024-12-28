@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "DeepSea");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isNET()) {
         var nOffset = PE.findString(PE.section[0].FileOffset, PE.section[0].FileSize, "DeepSeaObfuscator");
         if (nOffset != -1) {
@@ -14,5 +14,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

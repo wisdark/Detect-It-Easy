@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("compiler", "MinGW");
 
@@ -30,7 +30,7 @@ function getMinGWVersion() {
     return sResult;
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     /*if(PE.compareEP("5589E583EC08C7042401000000FF15........E8C8FEFFFF908DB426000000005589E583EC08C7042402000000FF15"))
     {
         bDetected=1;
@@ -47,7 +47,7 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
     if (PE.getMajorLinkerVersion() == 2) {
         if (!bFPC && (PE.getMinorLinkerVersion() <= 30 || PE.getMinorLinkerVersion() == 36 || PE.getMinorLinkerVersion() == 56)) {
-            if (PE.compare("'MZ'90000300000004000000FFFF0000B800000000000000400000000000000000000000000000000000000000000000000000000000000000000000800000000E1FBA0E00B409CD21B8014CCD21'This program cannot be run in DOS mode.\r\r\n$'00000000000000'PE'0000")) {
+            if (PE.compare("'MZ'90000300000004000000FFFF0000B800000000000000400000000000000000000000000000000000000000000000000000000000000000000000800000000E1FBA0E00B409CD21B8014CCD21'This program cannot be run in DOS mode.\r\r\n$'0000000000000'PE'0000")) {
                 if (!PE.section[".rsrc"]) {
                     bDetected = true;
                 } else {
@@ -67,11 +67,12 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         var buildidSection = PE.section[".buildid"],
             rdataSection = PE.section[".rdata"];
 
-        if (buildidSection) {
+        if (buildidSection && rdataSection) {
             bDetected = PE.isSignaturePresent(rdataSection.FileOffset, rdataSection.FileSize, "'Mingw'");
         }
     }
 
     _setLang("C/C++", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

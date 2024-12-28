@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("packer", "HTML Executable");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("558bec83c4..b8........e8$$$$$$$$538bd833c0a3........6a..e8........a3")) {
         if (PE.compareOverlay("'GHE32'")) {
             bDetected = true;
@@ -15,5 +15,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("HTML", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

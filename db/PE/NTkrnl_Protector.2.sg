@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "NTkrnl Protector");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("68........e8") && (PE.nLastSection >= 1)) {
         if (PE.getNumberOfImports() == 1) {
             if (PE.getNumberOfImportThunks(0) == 2) {
@@ -33,5 +33,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

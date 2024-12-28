@@ -1,11 +1,11 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: ELF_7719116
 // History:
 // Created 30.07.2013
 
 init("protector", "SecuROM");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.section[".securom"]) {
         sVersion = "pre-8.03.03";
         bDetected = true;
@@ -18,5 +18,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
-init("crypter", "Unknown cryptor");
+init("cryptor", "Unknown cryptor");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("fa8cde8ccf8edf8ec783c7..bb....8b1f83c3..b1..d3eb2bfbe8")) {
         sVersion = "#01";
         bDetected = true;
@@ -56,7 +56,19 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         sVersion = "#15";
         sOptions = "xorer";
         bDetected = true;
+    } else if (Binary.compare("e9$$$$e8$$$$5d83ed..0e1f0e07be....03f5bf....b9....f3a460be....0204463b")) {
+        sVersion = "#16";
+        sOptions = "1995 by A.V.Lemenkov";
+        bDetected = true;
+    } else if (Binary.compare("e9$$$$be....56b9....c704....c644....8134....4646cce2")) {
+        sVersion = "#17";
+        sOptions = "xorer";
+        bDetected = true;
+    } else if (Binary.compare("60bb....be....bf....8bcf03fb5781e9....f3a4c3")) {
+        sName = "Com-crypt";
+        sVersion = "#18";
+        bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

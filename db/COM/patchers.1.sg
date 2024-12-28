@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("patcher", "Patcher");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("bc....8cc88ec08ed8fcbe....b9....8ae180e4..ac32c48844..e2")) {
         sName = "Patch engine";
         sOptions = "by SoNiC //UTG";
@@ -96,5 +96,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

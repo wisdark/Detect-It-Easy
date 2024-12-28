@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Vito <@ScalletaZ>
 
 init("packer", "Virbox");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     for (var i = 0; i < ELF.getNumberOfPrograms(); i++) {
         var nOffset = ELF.getProgramFileOffset(i);
         if (ELF.findString(nOffset, 32, "Virbox Protector") != -1) {
@@ -12,5 +12,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
             break;
         }
     }
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

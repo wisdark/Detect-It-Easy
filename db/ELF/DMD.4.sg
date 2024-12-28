@@ -1,14 +1,16 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("compiler", "DMD");
 
 function getDMDVersion() {
-    var sResult = "";
-    var nSection = ELF.getSectionNumber(".comment");
+    var sResult = "",
+        nSection = ELF.getSectionNumber(".comment");
+
     if (nSection != -1) {
-        var nSectionOffset = ELF.getSectionFileOffset(nSection);
-        var nSectionSize = ELF.getSectionFileSize(nSection);
-        var nOffset = ELF.findString(nSectionOffset, nSectionSize, "DMD v");
+        var nSectionOffset = ELF.getSectionFileOffset(nSection),
+            nSectionSize = ELF.getSectionFileSize(nSection),
+            nOffset = ELF.findString(nSectionOffset, nSectionSize, "DMD v");
+
         if (nOffset != -1) {
             sResult = ELF.getString(nOffset + 5, 20);
         }
@@ -17,12 +19,13 @@ function getDMDVersion() {
     return sResult;
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var sDMDVersion = getDMDVersion();
     if (sDMDVersion != "") {
         bDetected = true;
         sVersion = sDMDVersion;
     }
     _setLang("D", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

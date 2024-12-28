@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "Smart Assembly");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isNET()) {
         if (PE.isSignatureInSectionPresent(0, "20ffffff005f175920ffff0000")) {
             sVersion = "3.X";
@@ -32,5 +32,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

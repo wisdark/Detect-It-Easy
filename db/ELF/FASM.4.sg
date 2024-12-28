@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("compiler", "FASM");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (ELF.getElfHeader_shstrndx() == 0) {
         if (ELF.getElfHeader_shnum() == 0) {
             if (ELF.getElfHeader_shentsize()) {
@@ -18,5 +18,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("ASMx" + (ELF.is64() ? "64" : "86"), bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

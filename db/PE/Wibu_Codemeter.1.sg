@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: sendersu
 /*
 If errors pls contact sendersu on cracklab.team
@@ -6,7 +6,7 @@ If errors pls contact sendersu on cracklab.team
 
 init("protection", "Wibu Codemeter");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var nFound = 0;
     var nOffset;
 
@@ -26,5 +26,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

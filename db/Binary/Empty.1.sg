@@ -1,11 +1,11 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("format", "empty file");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() == 0) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

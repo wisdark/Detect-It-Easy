@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("sfx", "ARJSFX");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     /*if(PE.isDosStubPresent())
     {
         var nOffset=PE.getDosStubOffset();
@@ -40,5 +40,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
-init("crypter", "Cryptor");
+init("cryptor", "Cryptor");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MSDOS.compareEP("b2..33f6b9....2e30144649e3..eb..b8....ffe0")) {
         sOptions = "by Rainor'99";
         bDetected = true;
@@ -55,5 +55,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

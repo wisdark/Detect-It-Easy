@@ -5,7 +5,7 @@
 
 init("protector", "KiwiSecurity");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     bDetected =
         APK.isArchiveRecordPresent("assets/crash") ||
         APK.isArchiveRecordPresent("assets/ec_dt.lic") ||
@@ -19,5 +19,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         APK.isArchiveRecordPresent("com/kiwivm/security") ||
         APK.isArchiveRecordPresent("com/kiwivm/security/StubApplication");
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

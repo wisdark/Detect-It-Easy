@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("packer", "ExE Pack");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("6068........B8........FF1068........50B8........FF1068........6A40FFD08905")) {
         if (PE.section[0].Name == "!EPack") {
             sVersion = "1.0-1.2";
@@ -19,5 +19,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

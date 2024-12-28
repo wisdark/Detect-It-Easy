@@ -19,7 +19,7 @@
           ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝   ╚══════╝╚═╝╚══════╝
  */
 
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 // =================== [ ABOUT ] ===================
 // This heuristic analysis will help identify
@@ -33,8 +33,16 @@
 // Did you like my work? :D Thank you! But what
 // about donation? I'll be very grateful <3
 //
-// * Bitcoin: 1DosXdevPgbaRKJkAJpvf2Jmjip8zC57he
-// * Litecoin: LUCKY777ju5Ea2VmenRuvk75kRUzTfwrHw
+// >> Payeer: P1066822521 [Recommended]
+//
+// >> BTC:  37uRiHBqK3QiJ2jamqmmk1Q3sCmAmWngcC
+//                        0,0005 BTC minimum
+//
+// >> LTC:  MCwRK1Z7K4GYHt9ZrbTR2SMCEqzqQaTbRF
+//                        0,001 LTC minimum
+//
+// >> USDT: TUVH7QkcZws78QMC3XyAwfuzxUbaeLnfAC
+//    TRC-20              5 USDT minimum
 // ================================================
 
 // ================= [ CONTACTS ] =================
@@ -48,8 +56,8 @@
 
 // For the script to work correctly, the following
 // official Detect It Easy components are required:
-// "FASM", "RosASM", "SpASM", "FPC", "PE\linker.6.sg",
-// "Microsoft.6.sg", "language"
+// "language", "FASM", "RosASM", "SpASM", "FPC"
+// "PE\linker.6.sg", "Microsoft.6.sg"
 
 // Please do not read the code out loud unless you have exorcism skills
 
@@ -88,6 +96,8 @@ function main() {
         }
 
         scanForPackersAndCryptors_NET_and_Native();
+        scanForLicensingSystems_NET_and_Native();
+        scanForDebugData_NET_and_Native();
 
         if (PE.isVerbose()) {
             scanForLanguages_NET_and_Native();
@@ -103,9 +113,11 @@ function main() {
     }
 }
 
+
+
 function stubForLegacyEngines() {
-    if (typeof PE.isNetObjectPresent === 'undefined') {
-        _setResult("DIE-Message", ">>> Update DIE Engine to 3.10 and higher for using Heuristic-analyser by DosX <<<", String(), String());
+    if (typeof _error === 'undefined') {
+        stdout(">>> Update DIE Engine to 3.11 and higher for using Heuristic-analyser by DosX <<<");
         return true;
     }
 
@@ -113,11 +125,41 @@ function stubForLegacyEngines() {
 }
 
 
+
 function stubForWrongEnvironment() {
     if (typeof PE === 'undefined') {
-        _setResult("DIE-Message", ">>> Wrong environment! 'PE' is undefined. Check DIE-engine for correct installation <<<");
+        stdout(">>> Wrong environment! 'PE' is undefined. Check DIE-engine for correct installation <<<");
+        return true;
     }
+
     return false;
+}
+
+
+
+/**
+ * Outputs a warning message to the appropriate output stream.
+ *
+ * Depending on the environment, this function will:
+ * - Use `console.warn` if `console` is available.
+ * - Use `_setResult` if `File` is available.
+ * - Use `_error` if it is defined as a function.
+ * - Throw an error if none of the above conditions are met.
+ *
+ * @param {string} stringToOut - The warning message to output.
+ */
+function stdout(stringToOut) {
+    if (typeof console === 'object') {
+        console.warn(stringToOut);
+    } else if (typeof File === 'object') {
+        _setResult("~warning", stringToOut, String(), String());
+    } else {
+        if (typeof _error === 'function') {
+            _error(stringToOut);
+        } else {
+            throw stringToOut;
+        }
+    }
 }
 
 
@@ -143,6 +185,8 @@ function scanForObfuscations_NET() {
         ],
         defaultEntries = [ // like MSIL, C#, C++ NET etc
             "Main",
+            "main", // F# entry
+            "main@", // F# entry
             "<Main>$", // For programs with top-level operators (C#)
             "mainCRTStartup", // C++ CLR .NET (CLI)
             "wWinMainCRTStartup" // C++ CLR .NET (GUI)
@@ -162,7 +206,19 @@ function scanForObfuscations_NET() {
         }
     }
 
-    if (isEntryPointModified) options += "Modified EP";
+    if (isEntryPointModified) options = "Modified EP";
+
+
+
+
+    var isNetCctorPresent = false;
+
+    if (PE.isNetGlobalCctorPresent() && !isClrNET()) {
+        log(logType.net, "Global constructor detected!");
+        isNetCctorPresent = true;
+    }
+
+    if (isNetCctorPresent) options += (options.length != 0 ? " + " : String()) + "CLR constructor";
 
 
 
@@ -210,7 +266,7 @@ function scanForObfuscations_NET() {
                 if (PE.VAToOffset(PE.getAddressOfEntryPoint()) != -1) {
                     log(logType.net, "Very strange EP pattern: " + getEpAsmPattern(onlyOpCodes = true, numberOf = 4).split("|").join(" .. "));
                 } else {
-                    log(logType.net, "No native entry point")
+                    log(logType.net, "No native entry point");
                 }
 
                 isNativeEntryPointModified = true;
@@ -227,9 +283,10 @@ function scanForObfuscations_NET() {
 
 
 
+    // Check if the specified DOS message is not found in the DOS stub
+
     var isDosMessageModified = false;
 
-    // Check if the specified DOS message is not found in the DOS stub
     if (PE.findSignature(PE.getDosStubOffset(), PE.getDosStubSize(), "'This program cannot be run in DOS mode.'") === -1) {
         log(logType.net, "DOS-stub modified!");
         isDosMessageModified = true;
@@ -240,11 +297,12 @@ function scanForObfuscations_NET() {
 
 
 
+    // Check PE image for strange sections
+
     var strangeSections = false;
 
     const badChars = '_-=+~!@#$%^&*()"№;%:?*():;,/\\|\'`<>.0123456789'; // Very very bad!
 
-    // Check conditions for strange sections
     if (PE.getNumberOfSections() > (!isClrNET() ? 6 : 10) || !PE.isSectionNamePresent(".text")) { strangeSections = true; } else {
         // Iterate through each section
         for (var i = 0; i < PE.getNumberOfSections() && !strangeSections; i++) {
@@ -277,6 +335,7 @@ function scanForObfuscations_NET() {
 
 
     // A popular way to obfuscate numbers/booleans
+
     var isIntConfusionPresent = false;
 
     const intConfusionXorPattern = opCodes.ldc_i4 + opCodes.ldc_i4 + opCodes.xor + opCodes.ldc_i4;
@@ -306,6 +365,7 @@ function scanForObfuscations_NET() {
 
 
     // Virtualization is a method of protection in which some code segments are rewritten into instructions inherent in the built-in virtual machine and executed by it
+
     var isVirtualizationPresent = false;
 
     if (
@@ -332,6 +392,7 @@ function scanForObfuscations_NET() {
 
 
     // Hiding calls using delegate tricks
+
     var callsEncrypt = false;
 
     if (
@@ -354,6 +415,7 @@ function scanForObfuscations_NET() {
 
 
     // https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.suppressildasmattribute
+
     var isAntiIldasmPresent = false;
 
     if (validateNetObject("SuppressIldasmAttribute")) {
@@ -366,12 +428,14 @@ function scanForObfuscations_NET() {
 
 
     // Anti de4dot via inheritance
+
     var isAntiDe4dotPresent = false;
 
     if (
         validateSignature("'Form'******00'Form'******00'Form'******00") || // samples by: NetShield
         validateNetObject("Form0") // samples by: MindLated
     ) {
+        log(logType.net, "File may be protected by de4dot!");
         isAntiDe4dotPresent = true;
     }
 
@@ -381,6 +445,7 @@ function scanForObfuscations_NET() {
 
 
     // An obfuscation method in which calli is used instead of regular calls
+
     var isCalliInvokesPresent = false;
 
     if (validateNetByteCode( // samples by: MindLated
@@ -422,6 +487,7 @@ function scanForObfuscations_NET() {
 
 
     // Turns the code into spaghetti by splitting it into blocks that it executes depending on the situation
+
     var isCtrlFlowPresent = false;
 
     if (validateNetByteCode( // samples by: ConfuserEx
@@ -573,6 +639,7 @@ function scanForObfuscations_NET() {
 
 
     // AntiTamper protects the file from modification
+
     var isAntiTamperPresent = false;
 
     if (
@@ -602,14 +669,15 @@ function scanForObfuscations_NET() {
 
 
     // If in the assembly you can find a second object starting with “<Module>”, then this is a fakeee!
+
     var isModuleCtorMultiple = false;
 
     var currentCtorOffset = PE.findSignature(PE.getDosStubOffset() + PE.getDosStubSize(), PE.getSize() - PE.getOverlaySize(), "00'<Module>'00");
 
-    if (currentCtorOffset != -1) {
+    if (currentCtorOffset !== -1) {
         var secondCtorNameOffset = PE.findSignature(currentCtorOffset + 10, PE.getSize() - PE.getOverlaySize(), "'<Module>'");
 
-        if (secondCtorNameOffset != -1 && PE.readByte(secondCtorNameOffset + 8) != 0x00) {
+        if (secondCtorNameOffset !== -1 && PE.readByte(secondCtorNameOffset + 8) !== 0x00) {
             log(logType.net, "Fake <Module> detected! Offset: 0x" + Number(secondCtorNameOffset).toString(16));
             isModuleCtorMultiple = true;
         }
@@ -620,7 +688,20 @@ function scanForObfuscations_NET() {
 
 
 
+    var isBadCctor = false;
+
+    if (currentCtorOffset === -1) {
+        log("It seems that the .cctor is missing. Bad PE format!");
+        isBadCctor = true;
+    }
+
+    if (isBadCctor) options += (options.length != 0 ? " + " : String()) + "Bad .cctor format";
+
+
+
+
     // Detects the use of unusual mathematical expressions that would be simplified by the compiler. For example, an expression like "912874 + 39188124^834"
+
     var isMutationsPresent = false;
 
     const mathOpCodes = [
@@ -734,6 +815,37 @@ function scanForObfuscations_NET() {
 
 
 
+    var isProtectionRuntimePresent = false;
+
+    var runtimeFound = String();
+
+    const protectionsRuntime = [ // Need more
+        { lib: "AgileDotNet.VMRuntime.dll", name: "Agile" },
+        { lib: "Xerin.Runtime.dll", name: "XerinFuscator" },
+        { lib: "OneVM.Runtime.dll", name: "OneVM" },
+        { lib: "HVMRuntm.dll", name: "DNGuard" }
+    ];
+
+    for (var i = 0; i < protectionsRuntime.length; i++) {
+        const
+            runtimeInfo = protectionsRuntime[i],
+            runtimeLibraryName = runtimeInfo.lib,
+            protectorName = runtimeInfo.name;
+
+        if (PE.isNetObjectPresent(runtimeLibraryName) || // "runtime.dll"
+            PE.isNetObjectPresent(runtimeLibraryName.substring(0, runtimeLibraryName.length - 4))) { // "runtime"
+            log(logType.net, protectorName + " runtime detected!");
+            isProtectionRuntimePresent = true;
+            runtimeFound = protectorName;
+            break;
+        }
+    }
+
+    if (isProtectionRuntimePresent) options += (options.length != 0 ? " + " : String()) + runtimeFound + " runtime";
+
+
+
+
     const obfuscatorsAttributes = [
         "Xenocode.Client.Attributes.AssemblyAttributes.ProcessedByXenocode",
         "CryptoObfuscator.ProtectedWithCryptoObfuscatorAttribute",
@@ -818,11 +930,11 @@ function scanForObfuscations_NET() {
 
 
     const protectorsLabelsToRemove = [ // Protectors with these names will be removed from results
+            "SafeNet Sentinel LDK .NET",
             "Xenocode Postbuild",
             "Smart Assembly",
             "Dotfuscator",
             "Babel .NET",
-            "Agile .NET",
             "Spices.Net",
             "Maxtocode",
             "FISH .NET",
@@ -832,9 +944,13 @@ function scanForObfuscations_NET() {
             "Sixxpack",
             "DNGuard",
             "Goliath",
+            "Agile",
             "Yano"
         ],
         packersLabelsToRemove = [
+            "ChainskiCrypter",
+            "Quest PowerGUI",
+            "DataAnubis",
             "NsPack",
             "ASPack"
         ],
@@ -858,6 +974,7 @@ function scanForObfuscations_NET() {
         }
 
         for (var d = 0; d < packersLabelsToRemove.length; d++) {
+            _removeResult("cryptor", packersLabelsToRemove[d]);
             _removeResult("packer", packersLabelsToRemove[d]);
         }
 
@@ -867,9 +984,9 @@ function scanForObfuscations_NET() {
     }
 
 
+
+
     if (options.length != 0) isDetected = true;
-
-
 
 
     if (isDetected) {
@@ -1053,10 +1170,18 @@ function scanForAntiAnalysis_NET() {
 
 
 
-// Determines whether the application is a C++ CLR
-
+/**
+ * Checks if the Portable Executable (PE) file is a .NET assembly.
+ *
+ * This function determines if the PE file is a .NET assembly by verifying the following:
+ * 1. The PE file is identified as a .NET assembly.
+ * 2. The PE file has the "KERNEL32.DLL" library present.
+ * 3. The PE file has a global .cctor (class constructor) method present.
+ *
+ * @returns {boolean} True if the PE file is a .NET assembly, otherwise false.
+ */
 function isClrNET() {
-    return PE.isNET() && PE.isLibraryPresent("KERNEL32.DLL");
+    return PE.isNET() && PE.isLibraryPresent("KERNEL32.DLL") && PE.isNetGlobalCctorPresent();
 }
 
 
@@ -1144,7 +1269,7 @@ function NetOpCodes() {
 
         // Check if the opcode mask has a body and the length of the body matches the length of the value
         if (isOpCodeMaskHasBody && opCodeMask.substr(opCodeInHex.length).length != value.length) {
-            throw "The size of the input values does not match.";
+            _error("The size of the input values does not match.");
         }
 
         // Combine the opcode in hexadecimal with the value
@@ -1155,18 +1280,19 @@ function NetOpCodes() {
     this.setNullValue = function(opCodeMask) {
 
         if (opCodeMask.indexOf("??") === -1) {
-            throw "Instruction does not have a body to overwrite the value.";
+            _error("Instruction does not have a body to overwrite the value.");
         }
 
         return replaceAllInString(opCodeMask, "??", "00");
     }
-
 }
+
 
 
 function removeSpaces(inputString) {
     return inputString.split(" ").join("");
 }
+
 
 
 function replaceAllInString(inputString, search, replacement) {
@@ -1175,6 +1301,12 @@ function replaceAllInString(inputString, search, replacement) {
     }
 
     return inputString;
+}
+
+
+
+function clearSectionName(sectionName) {
+    return sectionName.trim();
 }
 
 
@@ -1548,6 +1680,8 @@ function scanForPackersAndCryptors_NET_and_Native() { // For .NET and Native app
         [".NET Reactor", null, 1, 0xb4cda32f],
         ["Bat To Exe Converter", null, 0, 0x72a2ca64],
         ["Vbs To Exe Converter", null, 0, 0x182aac68],
+        ["DNGuard", null, 0, 0x38432571],
+        ["DNGuard", "4.9+", 0, 0x99f8b58e]
     ];
 
     const importValidatingResult = validateImportHashes(dbCollectionOfHashesDictionary);
@@ -1681,7 +1815,7 @@ function scanForPackersAndCryptors_NET_and_Native() { // For .NET and Native app
 
         // If section name is already encountered, set collision flag and break
         if (sectionNamesDictionary[sectionName]) {
-            log(logType.nothing, "Section names repeating: '" + sectionName + "'");
+            log(logType.nothing, "Section names repeating: '" + clearSectionName(sectionName) + "'");
             isSectionNamesRepeatingPresent = true;
         } else {
             sectionNamesDictionary[sectionName] = true;
@@ -1808,7 +1942,7 @@ function scanForPackersAndCryptors_NET_and_Native() { // For .NET and Native app
         }
     }
 
-    if (isCompressedSectionPresent) options += (options.length != 0 ? " + " : String()) + "Section " + sectionNumber + " (\"" + PE.getSectionName(sectionNumber) + "\") compressed";
+    if (isCompressedSectionPresent) options += (options.length != 0 ? " + " : String()) + "Section " + sectionNumber + " (\"" + clearSectionName(PE.getSectionName(sectionNumber)) + "\") compressed";
 
 
 
@@ -1819,27 +1953,196 @@ function scanForPackersAndCryptors_NET_and_Native() { // For .NET and Native app
     if (isDetected) {
         var detectedType = isCryptor ? "cryptor" : "packer";
 
-        _setResult("~" + detectedType, (isCryptor ? "Cryptor" : "Packer") + " detected", String(), PE.isVerbose() ? options : String());
+        _setResult("~" + detectedType, (isCryptor ? "Encrypted" : "Compressed") + " data", String(), PE.isVerbose() ? options : String());
     }
 }
 
 
 
 
+function scanForLicensingSystems_NET_and_Native() { // For .NET and Native apps
+    var options = String();
+
+    var isDetected = Boolean();
+
+
+
+
+    if (PE.isNET()) {
+
+        var isLicenseProviderPresent = false;
+
+        if (PE.isNetObjectPresent("LicenseProviderAttribute")) {
+            isLicenseProviderPresent = true;
+        }
+
+        if (isLicenseProviderPresent) options = "Provider attribute";
+
+
+
+        var isLicenseManagerPresent = false;
+
+        if (PE.isNetObjectPresent("LicenseManager")) {
+            isLicenseManagerPresent = true;
+        }
+
+        if (isLicenseManagerPresent) options += (options.length != 0 ? " + " : String()) + "License manager";
+
+    }
+
+
+
+
+    var isInterestingStringsFound = false;
+
+    const licesingStrings = [ /*[E]*/ "nter serial ", /*[S]*/ "erial key ", " activate ", " trial ", /*[W]*/ "rong activation", /*[W]*/ "rong licens", /*[L]*/ "icense expire", "valid license", /*[L]*/ "icense key", " full version", " purchase a "];
+
+    for (var i = 0; i < licesingStrings.length; i++) {
+        const currentPatternToFind = licesingStrings[i];
+
+        if (PE.isSignaturePresent(0x00, PE.getSize(), "'" + currentPatternToFind + "'") ||
+            PE.isSignaturePresent(0x00, PE.getSize(), "'" + generateUnicodeSignatureMask(currentPatternToFind) + "'")) {
+            isInterestingStringsFound = true;
+            break;
+        }
+    }
+
+    if (isInterestingStringsFound) options += (options.length != 0 ? " + " : String()) + "Strings";
+
+
+
+
+    if (options.length != 0) isDetected = true;
+
+
+    if (isDetected) {
+        _setResult("~licensing", "Contains", String(), PE.isVerbose() ? options : String());
+    }
+}
+
+
+
+function scanForDebugData_NET_and_Native() { // For .NET and Native apps
+    var options = String();
+
+    var isDetected = Boolean();
+
+
+
+
+    var isDebugSectionPresent = false;
+
+    var sectionNumber = 0;
+
+    for (var i = 0; i < PE.getNumberOfSections() && !isDebugSectionPresent; i++) {
+        sectionNumber = i;
+
+        const currentSectionName = PE.getSectionName(i).toLowerCase();
+
+        if (currentSectionName.indexOf("debug") !== -1 || // Modern LLVM debug sections
+            currentSectionName === ".stab" || currentSectionName === ".stabstr") { // TCC/GCC
+            log(logType.any, "Debug section detected: \"" + clearSectionName(PE.getSectionName(sectionNumber)) + "\"");
+            isDebugSectionPresent = true;
+        }
+    }
+
+    if (isDebugSectionPresent) options = "Section " + sectionNumber + " (\"" + clearSectionName(PE.getSectionName(sectionNumber)) + "\")";
+
+
+
+
+    // .NET Native debug header, EAT function
+
+    var isNetNativeDebugDataPresent = false;
+
+    if (!PE.isNET() && PE.isExportFunctionPresent("DotNetRuntimeDebugHeader")) {
+        log(logType.any, ".NET Native debug function detected");
+        isNetNativeDebugDataPresent = true;
+    }
+
+    if (isNetNativeDebugDataPresent) options += (options.length != 0 ? " + " : String()) + "DotNET runtime header";
+
+
+
+
+    var isPdbFullPathPresent = false;
+
+    var pdbExtensionPatternOffset = PE.findSignature(PE.getDosStubOffset() + PE.getDosStubSize(), PE.getSize() - PE.getOverlaySize(), "'.pdb'");
+
+    if (pdbExtensionPatternOffset != -1) {
+        var pdbPathBeginOffset;
+
+        for (var i = pdbExtensionPatternOffset; i > 0; i--) {
+            if (PE.readByte(i) === 0x00) {
+                pdbPathBeginOffset = i + 1;
+                break;
+            }
+        }
+
+        var pdbFullPath = PE.getString(pdbPathBeginOffset, 256);
+
+        if (pdbFullPath.length > 255)
+            pdbFullPath = pdbFullPath.substring(0, 255) + " . . .";
+
+        pdbFullPath = pdbFullPath.replace(/[\n\r]/g, "");
+
+        if (pdbFullPath.match(/^[a-zA-Z]:\\/) !== null) {
+            log(logType.any, "PDB absolute path: \"" + pdbFullPath + "\"");
+            isPdbFullPathPresent = true;
+        }
+    }
+
+    if (isPdbFullPathPresent) options += (options.length != 0 ? " + " : String()) + "Absolute PDB path";
+
+
+
+
+    if (options.length != 0) isDetected = true;
+
+
+    if (isDetected) {
+        _setResult("~debug data", "Contains", String(), PE.isVerbose() ? options : String());
+    }
+}
+
+
+
+/**
+ * Checks if the .NET Visual Basic standard library is present.
+ *
+ * @returns {boolean} True if the Microsoft.VisualBasic library is found; otherwise false.
+ */
 function isVbNetStandartLibraryPresent() {
     return PE.isNetObjectPresent("Microsoft.VisualBasic");
 }
 
 
-// Check if the file is a .NET Framework component
+
+/**
+ * Determines if the current file is a .NET DLL signed by Microsoft Corporation.
+ *
+ * @returns {boolean} True if the file meets the criteria, false otherwise.
+ */
 function isFrameworkComponent() {
     return PE.isNET() && PE.isDll() && PE.isSigned() && PE.findSignature(PE.getOverlayOffset(), 300, "'Microsoft Corporation'") != -1;
 }
 
-// Validate the presence of a signature in the file
+
+
+/**
+ * Validates the presence of a signature (pattern) within a specified range in a PE file.
+ *
+ * Searches for the given pattern starting from the DOS stub end until the PE size excluding the overlay.
+ * Logs a message if the pattern is found and returns a boolean indicating the result.
+ *
+ * @param {string} pattern - The pattern to search for within the file.
+ * @returns {boolean} True if the pattern is found, false otherwise.
+ */
 function validateSignature(pattern) {
-    const offsetFound = PE.findSignature(PE.getDosStubOffset() + PE.getDosStubSize(), PE.getSize() - PE.getOverlaySize(), pattern),
+    const
+        offsetFound = PE.findSignature(PE.getDosStubOffset() + PE.getDosStubSize(), PE.getSize() - PE.getOverlaySize(), pattern),
         resultBool = offsetFound != -1;
+
     if (resultBool) {
         lastOffsetDetected = "0x" + Number(offsetFound).toString(16);
         log(logType.any, "Pattern found: " + pattern);
@@ -1848,10 +2151,20 @@ function validateSignature(pattern) {
 }
 
 
+
+/**
+ * Searches all sections in the current PE file for the specified byte code.
+ * If discovered, logs the offset at which it appears and returns true.
+ * 
+ * @param {string} byteCode - The byte code signature to locate.
+ * @returns {boolean} True if the byte code is found in any section, otherwise false.
+ */
 function validateNetByteCode(byteCode) {
     for (var s = 0; s < PE.getNumberOfSections(); s++) {
-        const sectionOffset = PE.getSectionFileOffset(s),
+        const
+            sectionOffset = PE.getSectionFileOffset(s),
             sectionSize = PE.getSectionFileSize(s);
+
         var offsetFound = PE.findSignature(sectionOffset, sectionOffset + sectionSize, byteCode);
         if (offsetFound != -1) {
             lastOffsetDetected = "0x" + Number(offsetFound).toString(16);
@@ -1863,6 +2176,13 @@ function validateNetByteCode(byteCode) {
 }
 
 
+
+/**
+ * Validates if the given object is a .NET object.
+ *
+ * @param {Object} object - The object to be validated.
+ * @returns {boolean} - Returns true if the object is a .NET object, otherwise false.
+ */
 function validateNetObject(object) {
     const result = PE.isNetObjectPresent(object);
     if (result) log(logType.net, "Object present: " + object);
@@ -1870,6 +2190,13 @@ function validateNetObject(object) {
 }
 
 
+
+/**
+ * Validates if a .NET Unicode string is present in the PE file.
+ *
+ * @param {string} ustring - The Unicode string to validate.
+ * @returns {boolean} - Returns true if the Unicode string is present, otherwise false.
+ */
 function validateNetUnicodeString(ustring) {
     const result = PE.isNetUStringPresent(ustring);
     if (result) log(logType.net, "String present: \"" + ustring + "\"");
@@ -1877,6 +2204,17 @@ function validateNetUnicodeString(ustring) {
 }
 
 
+
+/**
+ * Validates if a given Unicode string exists within the PE file.
+ *
+ * This function searches for the specified Unicode string within the PE file's
+ * memory range, excluding the DOS stub and overlay sections. If the string is
+ * found, it logs a message indicating the presence of the string.
+ *
+ * @param {string} ustring - The Unicode string to search for within the PE file.
+ * @returns {boolean} - Returns true if the Unicode string is found, otherwise false.
+ */
 function validateGlobalUnicodeString(ustring) {
     const result = PE.findSignature(PE.getDosStubOffset() + PE.getDosStubSize(), PE.getSize() - PE.getOverlaySize(), generateUnicodeSignatureMask(ustring)) != -1;
     if (result) log(logType.nothing, "Unicode string found: \"" + ustring + "\"");
@@ -1884,9 +2222,19 @@ function validateGlobalUnicodeString(ustring) {
 }
 
 
-// Function to generate Unicode signature mask from an input string
-// "test" -> "'t'00'e'00's'00't'"
 
+/**
+ * Generates a Unicode signature mask for the given input string.
+ *
+ * This function iterates through each character in the input string and appends
+ * its Unicode representation to the output string. The first character is appended
+ * without a prefix, while subsequent characters are prefixed with "00".
+ * 
+ * "test" -> "'t'00'e'00's'00't'"
+ *
+ * @param {string} inputString - The input string for which to generate the Unicode signature mask.
+ * @returns {string} The generated Unicode signature mask.
+ */
 function generateUnicodeSignatureMask(inputString) {
     var output = String();
 
@@ -1901,8 +2249,13 @@ function generateUnicodeSignatureMask(inputString) {
 }
 
 
-// Function to check if all specified .NET references are missing
 
+/**
+ * Checks if all .NET references in the provided array are missing.
+ *
+ * @param {Array} references - An array of .NET references to check.
+ * @returns {boolean} - Returns true if all .NET references are missing, otherwise false.
+ */
 function isAllNetReferencesMissing(references) {
     // Iterate through the array of .NET references
     for (var i = 0; i < references.length; i++) {
@@ -1920,8 +2273,13 @@ function isAllNetReferencesMissing(references) {
 }
 
 
-// Function to check if all specified .NET references are present
 
+/**
+ * Checks if all .NET references are present.
+ *
+ * @param {Array} references - An array of .NET references to check.
+ * @returns {boolean} - Returns true if all .NET references are present, otherwise false.
+ */
 function isAllNetReferencesPresent(references) {
     // Iterate through the array of .NET references
     for (var i = 0; i < references.length; i++) {
@@ -1939,9 +2297,14 @@ function isAllNetReferencesPresent(references) {
 }
 
 
-// "isFullName = true"  = 00'sign'00
-// "isFullName = false" = 00'sign'
 
+/**
+ * Searches for a signature in the first section of a PE file and marks it if found.
+ *
+ * @param {string} sign - The signature to search for.
+ * @param {boolean} isFullName - A flag indicating whether to append '00' to the signature.
+ * @returns {string} - The found signature if present, otherwise an empty string.
+ */
 function findAndMark(sign, isFullName) {
     if (PE.isSignatureInSectionPresent(0,
             ("00'" + sign + "'") + // 00'string
@@ -1962,6 +2325,7 @@ function scanForObfuscations_Native() {
 
 
     // Check for section names containing forbidden characters
+
     var strangeSections = false;
 
     // Define forbidden characters
@@ -2021,10 +2385,11 @@ function scanForObfuscations_Native() {
     } else {
         // Define messages to check for custom DOS
         const messages = [
-            "This program cannot be run in DOS mode.",
+            "This program cannot be run in DOS mode.", // most popular (standart)
             "This program must be run under Win32",
             "This program must be run under Win64",
-            "This program requires Win32"
+            "This program requires Win32",
+            "This is a Windows NT character-mode executable" // Watcom C/C++
         ];
 
         isCustomDosPresent = true;
@@ -2045,6 +2410,7 @@ function scanForObfuscations_Native() {
 
 
     // It works if the file contains an import without an extension (for example, instead of "kernel32.dll" it is written "kernel32"). Compilers don't do that
+
     var isContainsNoExtensionLibrary = false;
 
     for (var i = 0; i < PE.getNumberOfImports() && !isContainsNoExtensionLibrary; i++) {
@@ -2065,13 +2431,14 @@ function scanForObfuscations_Native() {
 
 
     // .exe files in imports are a separate type of sophistication. But this happens.
+
     var exeInImports = false;
 
     for (var i = 0; i < PE.getNumberOfImports() && !exeInImports; i++) {
         const libraryName = PE.getImportLibraryName(i).toLowerCase();
 
         if (libraryName.length > 4) {
-            if (libraryName.substr(libraryName.length - 4, 4) === ".exe") {
+            if (libraryName !== "ntoskrnl.exe" && libraryName.substr(libraryName.length - 4, 4) === ".exe") {
                 exeInImports = true;
             }
         }
@@ -2083,6 +2450,7 @@ function scanForObfuscations_Native() {
 
 
     // Looks for sections whose names contain strange (or invalid) characters
+
     var isInvalidImportsPresent = false;
 
     const badImportChars = '=~!@#$%^&*()"№;%:?*():;,|\'`<> ';
@@ -2103,6 +2471,7 @@ function scanForObfuscations_Native() {
 
 
     // Checks if application resources can be read or if they are compressed/encrypted
+
     var isUnreadableResourcesPresent = false;
 
     for (var i = 0; i < PE.getNumberOfResources() && !isUnreadableResourcesPresent; i++) {
@@ -2144,6 +2513,7 @@ function scanForObfuscations_Native() {
 
     // Checks is executable application has been compiled or converted to a DLL
     // Like https://github.com/hasherezade/exe_to_dll
+
     var exeAsDll = false;
 
     if (PE.isDll() && (
@@ -2159,6 +2529,7 @@ function scanForObfuscations_Native() {
 
 
     // The .text section should always come first
+
     var isTextSectionNotFirst = false;
 
     if ((PE.section[0].Name != ".text" && PE.section[0].Name != ".textbss") && (PE.section[".text"] && PE.section[".textbss"])) {
@@ -2171,6 +2542,7 @@ function scanForObfuscations_Native() {
 
 
     // If IAT (Import Address Table) is missing
+
     var isIatMissing = false;
 
     if (PE.getNumberOfImports() == 0 &&
@@ -2184,50 +2556,55 @@ function scanForObfuscations_Native() {
 
 
     // Check if the entry point starts with NOP
+
     var isStartsWithNop = false;
 
     // Condition to check if the first instruction is NOP
-    if (getFirstEpAsmInstruction() === "NOP") // nop (90)
+    if (getFirstEpAsmInstruction() === "NOP") { // nop (90)
         isStartsWithNop = true;
+    }
 
     if (isStartsWithNop) options += (options.length != 0 ? " + " : String()) + "Nop at EP";
 
 
 
-
-    // Example:
-    //  xor eax, eax
-    //  je $+1
-    var isBreakerDetected = false;
-
+    // A lot of bugs! Todo.
     /*
-    0:  31 c0  |  xor eax, eax
-    1:  31 db  |  xor ebx, ebx
-    2:  31 c9  |  xor ecx, ecx
-    3:  31 d2  |  xor edx, edx
-    4:  31 f6  |  xor esi, esi
-    5:  31 ff  |  xor edi, edi
-    6:  31 ed  |  xor ebp, ebp
-    7:  31 e4  |  xor esp, esp
-    */
-    const xorPatterns_x86 = [
-        "c0", "db", "c9", "d2", "f6", "ff", "ed", "e4"
-    ];
+        // Example:
+        //  xor eax, eax
+        //  je $+1
+        var isBreakerDetected = false;
 
-    for (var i = 0; i < xorPatterns_x86.length && !isBreakerDetected; i++) {
-        const foundOffset = PE.findSignature(0x00, PE.getSize() - PE.getOverlaySize(), "31 " + xorPatterns_x86[i] + "0F84......00"); // ... je $+[*] ...
+       //
+       // 0:  31 c0  |  xor eax, eax
+       // 1:  31 db  |  xor ebx, ebx
+       // 2:  31 c9  |  xor ecx, ecx
+       // 3:  31 d2  |  xor edx, edx
+       // 4:  31 f6  |  xor esi, esi
+       // 5:  31 ff  |  xor edi, edi
+       // 6:  31 ed  |  xor ebp, ebp
+       // 7:  31 e4  |  xor esp, esp
+       //
+        const xorPatterns_x86 = [
+            "c0", "db", "c9", "d2", "f6", "ff", "ed", "e4"
+        ];
 
-        if (foundOffset !== -1 && !PE.compare("%% %% %% %% %% %% %%", foundOffset - 7)) {
-            isBreakerDetected = true;
+        for (var i = 0; i < xorPatterns_x86.length && !isBreakerDetected; i++) {
+            const foundOffset = PE.findSignature(0x00, PE.getSize() - PE.getOverlaySize(), "31 " + xorPatterns_x86[i] + "0F84......00"); // ... je $+[*] ...
+
+            if (foundOffset !== -1 && !PE.compare("%% %% %% %% %% %% %%", foundOffset - 7)) {
+                isBreakerDetected = true;
+            }
         }
-    }
 
-    if (isBreakerDetected) options += (options.length != 0 ? " + " : String()) + "Anti-Decompile";
+        if (isBreakerDetected) options += (options.length != 0 ? " + " : String()) + "Anti-Decompile";
+        */
 
 
 
 
     // Check if NOP padding is present at the entry point
+
     var isNopPaddingPresent = false;
 
     // Condition to check for NOP padding
@@ -2241,10 +2618,13 @@ function scanForObfuscations_Native() {
 
 
     // ASM Guard fake signatures
+
     if (PE.isSectionNamePresent(".asmg") || PE.isSectionNamePresent("ASMGUARD")) {
         for (var f = 0; f < 3; f++)
             _removeResult("packer", ["UPX", "MPRESS", "EP:MPRESS"][f]);
     }
+
+
 
 
     if (options.length != 0) isDetected = true;
@@ -2256,12 +2636,16 @@ function scanForObfuscations_Native() {
 }
 
 
+
 const _patternSplitter = "|";
 
-
-// Makes it possible to disassemble the entry point code and output
-// a specified number of instructions through a splitter (_patternSplitter)
-
+/**
+ * Generates a pattern of assembly instructions or opcodes from the entry point.
+ *
+ * @param {boolean} onlyOpCodes - If true, only the opcodes of the instructions are included in the pattern.
+ * @param {number} numberOf - The number of instructions to include in the pattern.
+ * @returns {string} The generated assembly pattern.
+ */
 function getEpAsmPattern(onlyOpCodes, numberOf) {
     // Initialize the result with a pattern splitter
     var result = _patternSplitter;
@@ -2293,8 +2677,13 @@ function getEpAsmPattern(onlyOpCodes, numberOf) {
 }
 
 
-// Function to get assembly instruction by index
 
+/**
+ * Retrieves the assembly instruction at the specified index from the entry point of a PE file.
+ *
+ * @param {number} index - The index of the assembly instruction to retrieve.
+ * @returns {string} The assembly instruction at the specified index.
+ */
 function getAsmInstructionByIndex(index) {
     // Get the address of the entry point
     var disasmAddress = PE.getAddressOfEntryPoint();
@@ -2318,15 +2707,22 @@ function getAsmInstructionByIndex(index) {
 }
 
 
-// Makes it possible to get a subpattern to search for instructions in a
-// pattern divided through a separator (_patternSplitter)
-//
-// like "|OPCODE1|OPCODE2|OPCODE3|".indexOf("|OPCODE2|")
-// but  "|OPCODE1|OPCODE2|OPCODE3|".indexOf(getInstructionsAsmPattern("OPCODE2"))
-//  or
-// like "|OPCODE1|OPCODE2|OPCODE3|".indexOf("|OPCODE2|OPCODE3|")
-// but  "|OPCODE1|OPCODE2|OPCODE3|".indexOf(getInstructionsAsmPattern(["OPCODE2", "OPCODE3"]))
 
+/**
+ * Generates a subpattern string to search for instructions within a pattern divided by a separator.
+ *
+ * This function allows you to create a subpattern that can be used to search for specific instructions
+ * within a larger pattern string that is divided by a separator (_patternSplitter).
+ *
+ * Examples:
+ * - "|OPCODE1|OPCODE2|OPCODE3|".indexOf("|OPCODE2|")
+ * - "|OPCODE1|OPCODE2|OPCODE3|".indexOf(getInstructionsAsmPattern("OPCODE2"))
+ * - "|OPCODE1|OPCODE2|OPCODE3|".indexOf("|OPCODE2|OPCODE3|")
+ * - "|OPCODE1|OPCODE2|OPCODE3|".indexOf(getInstructionsAsmPattern(["OPCODE2", "OPCODE3"]))
+ *
+ * @param {string|string[]} instruction - The instruction or array of instructions to create the subpattern for.
+ * @returns {string} The generated subpattern string.
+ */
 function getInstructionsAsmPattern(instruction) {
     return _patternSplitter +
         (
@@ -2338,27 +2734,55 @@ function getInstructionsAsmPattern(instruction) {
 }
 
 
+
+/**
+ * Retrieves the first assembly instruction at the entry point of the PE file.
+ *
+ * @returns {string} The disassembled string of the first instruction at the entry point.
+ */
 function getFirstEpAsmInstruction() {
     return PE.getDisasmString(PE.OffsetToVA(PE.getEntryPointOffset()));
 }
 
 
-// Gets an opcode from an instruction
 
+/**
+ * Extracts the opcode from an assembly instruction.
+ *
+ * @param {string} instruction - The assembly instruction.
+ * @returns {string} - The opcode of the instruction.
+ */
 function getAsmOpCode(instruction) {
     return instruction.indexOf(" ") !== -1 ? instruction.split(" ")[0] : instruction;
 }
 
 
-// Returns only the name of the opcode used, without arguments
 
+/**
+ * Retrieves the first assembly operation code from the entry point of the executable.
+ *
+ * @returns {string} The assembly operation code of the first instruction at the entry point.
+ */
 function getFirstEpAsmOpCode() {
     return getAsmOpCode(getFirstEpAsmInstruction());
 }
 
 
-// VC ?warp_size@cuda@at@@YAHXZ
-// GNU _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_i
+
+/**
+ * Checks if a given function name pattern is mangled.
+ *
+ * This function determines if a function name pattern is mangled by checking
+ * specific characteristics of the pattern. It supports detection for both
+ * Microsoft Visual C++ (MSVCPP) and GNU C++ (GNUCPP) mangled names.
+ *
+ * Examples:
+ * - MSVCPP: ??0_Lockit@std@@QEAA@H@Z
+ * - GNUCPP: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_i
+ * 
+ * @param {string} functionPattern - The function name pattern to check.
+ * @returns {boolean} - Returns true if the function name pattern is mangled, otherwise false.
+ */
 function isFunctionMangled(functionPattern) {
     return functionPattern.length > 5 && (
         (functionPattern[0] == '?' && functionPattern.indexOf("@@") !== -1) || // MSVCPP mangler
@@ -2367,6 +2791,13 @@ function isFunctionMangled(functionPattern) {
 }
 
 
+
+/**
+ * Extracts the name of a mangled function from a given function pattern.
+ *
+ * @param {string} functionPattern - The mangled function pattern to analyze.
+ * @returns {string} - The extracted function name if the pattern is recognized as mangled, otherwise returns the original pattern.
+ */
 function getNameOfMangledFunction(functionPattern) {
     if (isFunctionMangled(functionPattern)) {
         if (functionPattern[0] === '?' && functionPattern[1] !== '?') {
@@ -2410,12 +2841,26 @@ function getNameOfMangledFunction(functionPattern) {
 }
 
 
+
+/**
+ * Validates import hashes in a given database collection.
+ *
+ * @param {Array} dbCollection - The database collection to validate. Each element in the collection is expected to be an array with the following structure:
+ *   [name, version, position, hash]
+ *   - name {string}: The name of the import.
+ *   - version {string}: The version of the import.
+ *   - position {number}: The position of the import.
+ *   - hash {string}: The hash of the import.
+ * @returns {Array|null} The first array pattern that has a matching import position and hash, or null if no match is found.
+ */
 function validateImportHashes(dbCollection) {
     for (var i = 0; i < dbCollection.length; i++) {
-        const currentIndex = i,
+        const
+            currentIndex = i,
             currentArrayPattern = dbCollection[currentIndex];
 
-        const name = currentArrayPattern[0],
+        const
+            name = currentArrayPattern[0],
             version = currentArrayPattern[1],
             position = currentArrayPattern[2],
             hash = currentArrayPattern[3];
@@ -2429,12 +2874,28 @@ function validateImportHashes(dbCollection) {
 }
 
 
+
+/**
+ * Validates section names in a given database collection.
+ *
+ * Iterates through the provided database collection and checks if the section name
+ * is present using the PE.isSectionNamePresent function. If a section name is found,
+ * it returns the corresponding array pattern. If no section name is found, it returns null.
+ *
+ * @param {Array} dbCollection - The database collection to validate, where each element is an array pattern.
+ * @param {string} dbCollection[].0 - The name in the array pattern.
+ * @param {string} dbCollection[].1 - The version in the array pattern.
+ * @param {string} dbCollection[].2 - The section name in the array pattern.
+ * @returns {Array|null} The array pattern with the valid section name, or null if no valid section name is found.
+ */
 function validateSectionNames(dbCollection) {
     for (var i = 0; i < dbCollection.length; i++) {
-        const currentIndex = i,
+        const
+            currentIndex = i,
             currentArrayPattern = dbCollection[currentIndex];
 
-        const name = currentArrayPattern[0],
+        const
+            name = currentArrayPattern[0],
             version = currentArrayPattern[1],
             sectionName = currentArrayPattern[2];
 
@@ -2458,23 +2919,42 @@ function scanForLanguages_NET_and_Native() {
         ["Rust", "rs"],
         ["Java", "class"],
         ["JavaScript", "js"],
-        ["Python", "pyd"]
+        ["Python", "pyd"],
+        ["PureBasic", "pb"]
     ];
 
+
     for (var i = 0; i < extdb.length; i++) {
-        const langName = extdb[i][0],
+        const
+            langName = extdb[i][0],
             langExtName = extdb[i][1];
 
-        if (PE.isSignaturePresent(0x00, PE.getSize(), "%% %% %% %% %% %% %% %% %% '." + langExtName + "' 00 00")) {
+        if (PE.isSignaturePresent(0x00, PE.getSize(), "%% %% %% %% %% %% %% %% '." + langExtName + "' 00 00")) {
             log(logType.any, "Lines of ." + langExtName + " files (" + langName + ") detected");
             _setLangByHeur(langName);
         }
     }
 
+
     if (!_isLangDetected("C++") && PE.isSignaturePresent(0x00, PE.getSize(), "%% %% %% %% %% %% %% %% %% %% '.c' 00")) {
         log(logType.any, "Lines of .c files (C) detected (not a C++)");
         _setLangByHeur("C");
     }
+
+
+    for (var i = 0; i < PE.getNumberOfResources(); i++) {
+        var resourceOffset = PE.getResourceOffsetByNumber(i);
+
+        if (resourceOffset !== -1) {
+            var resourceSignature = PE.getString(resourceOffset, 0x40);
+
+            if (resourceSignature.split(" ")[0] === "object" && resourceSignature.indexOf(": ") !== -1) {
+                _setLangByHeur("Object Pascal");
+                break;
+            }
+        }
+    }
+
 
     if (!_getNumberOfResults("protector") &&
         !_getNumberOfResults("cryptor") &&
@@ -2556,17 +3036,34 @@ function scanForLanguages_NET_and_Native() {
 }
 
 
+
+/**
+ * Sets the language based on heuristic analysis.
+ *
+ * @param {string} languageName - The name of the detected language.
+ */
 function _setLangByHeur(languageName) {
     log(logType.any, languageName + " language detected!");
     _setLang(languageName, true, heurLabel);
 }
 
 
-function log(messageTypeId, messageText) {
-    // if (PE.isProfiling()) return null;
 
+/**
+ * Logs a message with a specific type and text.
+ *
+ * @param {number} messageTypeId - The type of the message. 
+ *                                 -2: Error, 
+ *                                 -1: About, 
+ *                                  1: Any, 
+ *                                  2: .NET.
+ * @param {string} messageText - The text of the message to log. 
+ *                               Must not contain newline characters.
+ * @throws Will throw an error if the messageText contains a newline character.
+ */
+function log(messageTypeId, messageText) {
     if (messageText.indexOf("\n") != -1) {
-        throw "Illegal char at log( ... )";
+        _error("Illegal char at log( ... )");
     }
 
     var prefix = String();
@@ -2632,13 +3129,14 @@ function scanForMaciliousCode_NET_and_Native() {
 }
 
 
+
 function heurAvSetResult(label, scores) {
     if (scores <= 10 && scores >= 0) {
         _setResult("macilious", ("Win" + (PE.is64() ? "64" : "32") + ".") + label, "Heuristic AV", scores + "/10");
     } else {
-        throw "Incorrect scores value for '" + label + "'";
+        _error("Incorrect scores value for '" + label + "'");
     }
 }
 
 
-// Every time I start writing bad code I get hit with my head on the keybofewuihdsowefjfqodgsa79dowqhdsioefurogrwhuoguethuhofrwyi
+// Every time I start writing bad code I get hit with my head on the keybofewuihdsowefjfqodgsa79dowqhdsioefurogrwhuoguethuhofrwyioguqwehuf

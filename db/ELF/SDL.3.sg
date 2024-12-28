@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("library", "SDL");
 
@@ -22,7 +22,7 @@ function getSDLVersion() {
     return sResult;
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (ELF.isStringInTablePresent(".dynstr", "SDL_Init")) {
         bDetected = true;
     }
@@ -31,5 +31,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         sVersion = getSDLVersion();
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

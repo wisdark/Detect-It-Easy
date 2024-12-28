@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("tool", "SingleJar");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
 
     bDetected = APK.getManifestRecord("Created-By") == "singlejar";
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

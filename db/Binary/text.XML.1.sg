@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("source", "XML");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     var sText = Binary.getHeaderString();
     // Ignore the UTF-8 BOM.
     if (/^(?:\xef\xbb\xbf)?<\?xml/.test(sText)) {
@@ -14,5 +14,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

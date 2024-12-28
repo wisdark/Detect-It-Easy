@@ -4,7 +4,7 @@
 init("audio", "Next/SUN Au waveform audio (.AU,.SND)");
 includeScript("read");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
 
     //ref https://en.wikipedia.org/wiki/Au_file_format
     // & https://sox.sourceforge.net/AudioFormats-11.html#ss11.2
@@ -114,5 +114,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         sOption("ch:" + ch + " s/r:" + sr + "kHz");
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

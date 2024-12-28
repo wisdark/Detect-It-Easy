@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "DNGuard");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isNET()) {
         if (_getNumberOfResults("protector") <= 1 && (PE.isNetObjectPresent("ZYXDNGuarder") || PE.isNetObjectPresent("HVMRuntm.dll"))) {
             bDetected = true;
@@ -24,7 +24,10 @@ function detect(bShowType, bShowVersion, bShowOptions) {
                 sOptions = "modified";
             }
         }
+    } else if (!PE.is64() && PE.isImportPositionHashPresent(0, 0x99f8b58e)) {
+        bDetected = true;
+        sVersion = "4.9+";
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

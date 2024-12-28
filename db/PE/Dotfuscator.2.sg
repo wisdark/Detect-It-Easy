@@ -1,11 +1,11 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "Dotfuscator");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (_getNumberOfResults("protector") <= 1 && PE.isNetObjectPresent("DotfuscatorAttribute")) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

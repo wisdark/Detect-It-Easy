@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Jason Hood <jadoxa@yahoo.com.au>
 /*
    Ref: http://mpgedit.org/mpgedit/mpeg_format/mpeghdr.htm
@@ -106,7 +106,7 @@ var MP3 = {
     }
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 128) {
         if (Binary.compare("'TAG'", Binary.getSize() - 128)) {
             sOptions = "ID3v1";
@@ -185,5 +185,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("self-displayer", "");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MSDOS.compareEP("b8....8ed88c06....fa8ed0bc....fbb430cd21a3....0650b434cd218c06....8bc3485b86df81fb")) {
         var nOffset = MSDOS.getOverlayOffset();
         if (MSDOS.findSignature(nOffset - 0x1000, 0x1000, "'Simply Docs Viewer'") != -1) {
@@ -18,5 +18,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

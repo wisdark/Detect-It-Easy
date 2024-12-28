@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("protector", "Best Protection Kit-B");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.compare("eb$$fc8c06....e421a2....b0..e621fb33c08ed08be0be....8d3e....b9")) {
         sOptions = "1993 by Eric Zmiro";
         bDetected = true;
@@ -12,5 +12,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

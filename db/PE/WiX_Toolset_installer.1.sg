@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
-init("installer", "WiX Toolset installer");
+init("installer", "WiX Toolset Installer");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareOverlay("'MSCF'00000000")) {
         if (PE.compareEP("e8$$$$$$$$558bec83ec..a1........8365....8365....5657bf........be........3bc774..85c674..f7")) {
             bDetected = true;
@@ -16,5 +16,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
             bDetected = true;
         }
     }
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

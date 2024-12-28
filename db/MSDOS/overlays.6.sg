@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("overlay", "");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MSDOS.compareOverlay("....'-lh'..2d") || MSDOS.compareOverlay("....'-lz'..2d")) {
         sName = "LHA archive";
         switch (MSDOS.readByte(MSDOS.getOverlayOffset() + 0x5)) {
@@ -64,7 +64,10 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     } else if (MSDOS.compareOverlay("'SXD'00")) {
         sName = "Sydex archive";
         bDetected = true;
+    } else if (MSDOS.compareOverlay("'RS'000102")) {
+        sName = "GamBit Pro Library archive";
+        bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

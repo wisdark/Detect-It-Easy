@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("protector", "Soft Defender");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.compareEP("74$$74$$78$$68A2AF470159E8")) { // 07  1F  0F
         if (PE.compareEP("BA010000", 72)) {
             sVersion = "1.0-1.1";
@@ -16,5 +16,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

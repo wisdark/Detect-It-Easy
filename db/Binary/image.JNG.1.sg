@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 // doc-ref: http://www.libpng.org/pub/mng/spec/jng.html
 
 init("image", "JPEG Network Graphics (.JNG)");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 0x40) {
         if (Binary.compare("8B'JNG\r\n'1A0A........'JHDR'")) {
             bDetected = true;
@@ -30,5 +30,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

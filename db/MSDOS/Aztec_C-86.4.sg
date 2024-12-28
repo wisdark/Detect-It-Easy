@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("compiler", "Aztec C-86");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MSDOS.compareEP("bd....85ed75..8cdd2e8c1e....8b1e....2bdd81fb....76..8d9e....8cc02bd8b4..cd21bb....8ec5")) {
         sVersion = "3.40";
         sOptions = "1988";
@@ -36,5 +36,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

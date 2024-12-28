@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: hypn0 <hypn0@mail.ru>
 
 init("packer", "UPX");
@@ -71,7 +71,7 @@ function getUPXVersion() {
     }
 }
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (LE.compareEP("bf........6957..........061e07578db7........8dbf........b9........fdf3a5fc8d77..5f83cd..57e9")) {
         sOptions = "for Watcom C";
         bDetected = true;
@@ -81,5 +81,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
     getUPXVersion();
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

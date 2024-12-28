@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: sendersu
 /*
 If errors pls contact sendersu on exelab.ru
@@ -6,7 +6,7 @@ If errors pls contact sendersu on exelab.ru
 
 init("compiler", "DEC Visual Fortran (Windows)");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.section[".data"]) {
         var nOffset = PE.section[".data"].FileOffset;
         var nSize = PE.section[".data"].FileSize;
@@ -18,5 +18,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("Fortran", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

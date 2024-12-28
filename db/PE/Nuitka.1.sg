@@ -7,7 +7,7 @@
 
 init("packer", "Nuitka");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (PE.isSectionNamePresent(".rdata")) {
 
         var section = PE.section[".rdata"],
@@ -21,5 +21,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
             sOptions = "OneFile";
         }
     }
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

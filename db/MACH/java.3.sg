@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("library", "Java Runtime");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (MACH.isLibraryPresent("libjava.dylib")) {
         bDetected = true;
     } else if (MACH.isLibraryPresent("libjvm.dylib")) {
@@ -10,5 +10,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
     }
 
     _setLang("Java", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

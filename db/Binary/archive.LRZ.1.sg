@@ -1,10 +1,10 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 // Status: WIP
 
 init("archive", "Long Range ZIP (.LRZ)");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 9) {
         if (Binary.compare("'LRZI'")) {
             bDetected = true;
@@ -53,5 +53,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

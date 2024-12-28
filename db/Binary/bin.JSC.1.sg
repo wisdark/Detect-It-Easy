@@ -1,4 +1,4 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 
 init("format", "JavaScript Compiled/Bytenode (.JSC)");
@@ -67,7 +67,7 @@ var VersionHash = [
     ["3.28.71.20", "26145e77", "fec9a40d"],
 ];
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 0x20) {
         if (Binary.compare("DEC0", 0x02)) {
             bDetected = true;
@@ -83,5 +83,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
 
 
     _setLang("JavaScript", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

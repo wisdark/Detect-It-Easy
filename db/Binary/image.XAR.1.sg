@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 // doc-ref: http://site.xara.com/support/docs/webformat/spec/XARFormatDocument.pdf
 init("image", "Xar Vector graphic file (.XAR)");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 0x40) {
         if (Binary.compare("'XARA'A3A30D0A")) {
             bDetected = true;
@@ -27,5 +27,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

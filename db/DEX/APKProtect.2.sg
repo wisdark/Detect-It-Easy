@@ -5,8 +5,8 @@
 
 init("protector", "APKProtect");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     bDetected = DEX.isDexStringPresent("APKProtect");
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

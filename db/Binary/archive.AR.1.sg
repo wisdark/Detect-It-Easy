@@ -1,11 +1,11 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: LinXP
 // Status: WIP
 // doc-ref: https://en.wikipedia.org/wiki/Ar_(Unix)
 includeScript("archive-file");
 init("archive", "The archiver (.AR)");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
 
     function ParseLibInfo() {
         sType = "format";
@@ -41,11 +41,6 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    function ParseDebInfo() {
-        sName = "Debian Software package (.DEB)";
-        sVersion = Binary.getString(nOffset, nFileSize - 1);
-    }
-
     if (Binary.compare("'!<arch>'0A")) {
         bDetected = true;
         var nOffset = 8
@@ -53,13 +48,13 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         while (nOffset < Binary.getSize()) {
             sFileName = Binary.getString(nOffset, 0x10).trim();
             nOffset += 0x10;
-            nOffset += 0x0C; //modification_timestamp
-            nOffset += 0x06; //ownerID
-            nOffset += 0x06; //groupID
-            nOffset += 0x08; //fileMode
+            nOffset += 0x0C; // modification_timestamp
+            nOffset += 0x06; // ownerID
+            nOffset += 0x06; // groupID
+            nOffset += 0x08; // fileMode
             nFileSize = parseInt(Binary.getString(nOffset, 0x0A));
             nOffset += 0x0A;
-            nOffset += 0x02; //endMarker
+            nOffset += 0x02; // endMarker
             switch (sFileName) {
                 case "/":
                     ParseLibInfo();
@@ -80,5 +75,11 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         //sOption("Items:" + nItemCount);
         if (Binary.isVerbose()) sOption(Archive.contents()); // TODO: parse DIR\FILES
     }
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    function ParseDebInfo() {
+        sName = "Debian Software package (.DEB)";
+        sVersion = Binary.getString(nOffset, nFileSize - 1);
+    }
+
+    return result();
 }

@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("compiler", "Zig");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if ((ELF.isSectionNamePresent(".rodata")) && (ELF.isDeepScan())) {
         var nIndex = ELF.getSectionNumber(".rodata");
 
@@ -12,10 +12,11 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         var nVersionOffset = ELF.findSignature(nOffset, nSize, "5a49475f44454255475f434f4c4f52"); // ANSI ZIG_DEBUG_COLOR
 
         if (nVersionOffset != -1) {
-            bDetected = 1;
+            bDetected = true;
         }
     }
 
     _setLang("Zig", bDetected);
-    return result(bShowType, bShowVersion, bShowOptions);
+
+    return result();
 }

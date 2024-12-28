@@ -1,9 +1,9 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 // Author: Tembo (http://tembolab.pl/products/executable-image-viewer.html)
 
 init("format", "AAA Logo");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (Binary.getSize() >= 90) {
         if (Binary.compare("2CA46774")) {
             sVersion = "";
@@ -12,5 +12,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         }
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }

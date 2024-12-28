@@ -1,8 +1,8 @@
-// DIE's signature file
+// Detect It Easy: detection rule file
 
 init("operation system", "Unix");
 
-function detect(bShowType, bShowVersion, bShowOptions) {
+function detect() {
     if (ELF.isVerbose()) {
         sName = ELF.getOperationSystemName();
         sVersion = ELF.getOperationSystemVersion();
@@ -11,5 +11,5 @@ function detect(bShowType, bShowVersion, bShowOptions) {
         bDetected = true;
     }
 
-    return result(bShowType, bShowVersion, bShowOptions);
+    return result();
 }
